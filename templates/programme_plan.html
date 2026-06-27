@@ -53,7 +53,7 @@
             display: flex; flex: 1; overflow: hidden; position: relative; z-index: 1;
         }
 
-        /* Left Sidebar - Modified for flex layout to push address down */
+        /* Left Sidebar */
         .sidebar {
             width: 220px; background-color: #eaeaea; border-right: 2px solid #ccc;
             padding: 10px; display: flex; flex-direction: column;
@@ -107,7 +107,6 @@
         .section-box { border: 1px solid #333; padding: 20px; margin-bottom: 20px; border-radius: 5px; }
         .summary-table { width: 300px; float: right; margin-top: 10px; }
 
-        /* Modal & Print styles from previous version remain intact */
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
         .modal-content { background-color: #fff; margin: 2% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 800px; height: 90vh; overflow-y: auto; }
         .close-btn { color: red; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
@@ -131,6 +130,11 @@
         .pdf-footer { margin-top: 100px; clear: both; }
         .pdf-signatures { display: flex; justify-content: space-between; margin-top: 50px; }
         .signature-line { border-top: 1px solid #000; width: 200px; text-align: center; padding-top: 5px; }
+
+        .excel-upload-box {
+            background-color: #fdfdfd; border: 1px dashed #007bff; padding: 10px;
+            margin-bottom: 15px; font-size: 13px; border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -195,7 +199,7 @@
             <div>
                 <button id="btn-Quotations" class="active" onclick="switchTab('Quotations')">Quotations</button>
                 <button id="btn-Sales Orders" onclick="switchTab('Sales Orders')">Sales Orders</button>
-                <button id="btn-Production Orders" onclick="switchTab('Production Orders')">Production Orders</button>
+                <button id="btn-Production Orders" onclick="document.getElementById('history-sales').scrollIntoView();">Production Orders</button>
                 <button id="btn-Programme Sheets" onclick="switchTab('Programme Sheets')">Programme Sheets</button>
                 
                 <div class="history-btn-container">
@@ -289,6 +293,20 @@
             </div>
 
             <div class="section-box workspace" id="workspace-Sales Orders" style="display:none;">
+                
+                <div class="form-grid" style="grid-template-columns: 1fr 1fr;">
+                    <div class="excel-upload-box">
+                        <strong>Upload Customer Details (CSV/Excel):</strong><br>
+                        <input type="file" id="uploadCustomersExcel" accept=".csv, .xlsx, .xls" onchange="loadCustomersExcel(event)" style="margin-top:5px;">
+                        <span id="custUploadStatus" style="color:green; display:block; margin-top:5px;"></span>
+                    </div>
+                    <div class="excel-upload-box">
+                        <strong>Upload Paper Type & Name (CSV/Excel):</strong><br>
+                        <input type="file" id="uploadPaperExcel" accept=".csv, .xlsx, .xls" onchange="loadPaperExcel(event)" style="margin-top:5px;">
+                        <span id="paperUploadStatus" style="color:green; display:block; margin-top:5px;"></span>
+                    </div>
+                </div>
+
                 <div class="form-grid" style="grid-template-columns: 1fr 1fr 1fr;">
                     <div class="form-group">
                         <label>Date & Time (Auto)</label>
@@ -300,14 +318,14 @@
                     </div>
                     <div class="form-group">
                         <label>Product Name</label>
-                        <input type="text" id="soProductName" list="productList" placeholder="Start typing...">
+                        <input type="text" id="soProductName" list="productList" placeholder="Start typing or select...">
                     </div>
                 </div>
 
                 <div class="form-grid" style="border-top:1px solid #ccc; padding-top:15px; margin-top:10px;">
                     <div>
                         <div class="form-group">
-                            <label>Customer ID (Type C001, C002...)</label>
+                            <label>Customer ID (Auto-fills on entry)</label>
                             <input type="text" id="soCustomerId" oninput="autofillCustomerSO()">
                         </div>
                         <div class="form-group">
@@ -359,26 +377,14 @@
 
                         <div class="details-row" style="align-items: flex-start;">
                             <label>Paper <br>Combination:</label>
-                            <div>
-                                <div style="display:flex; margin-bottom:5px;">
-                                    <input type="text" placeholder="GSM (Type)" class="table-input" style="border:1px solid #ccc; padding:4px; width:100px; margin-right:5px;">
-                                    <select class="table-input paper-type-select" style="border:1px solid #ccc; padding:4px; width:150px;"></select>
+                            <div id="paperRowsContainer">
                                 </div>
-                                <div style="display:flex; margin-bottom:5px;">
-                                    <input type="text" placeholder="GSM (Type)" class="table-input" style="border:1px solid #ccc; padding:4px; width:100px; margin-right:5px;">
-                                    <select class="table-input paper-type-select" style="border:1px solid #ccc; padding:4px; width:150px;"></select>
-                                </div>
-                                <div style="display:flex;">
-                                    <input type="text" placeholder="GSM (Type)" class="table-input" style="border:1px solid #ccc; padding:4px; width:100px; margin-right:5px;">
-                                    <select class="table-input paper-type-select" style="border:1px solid #ccc; padding:4px; width:150px;"></select>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div style="margin-top: 20px; text-align: right; border-top:1px solid #ccc; padding-top:15px;">
-                    <button class="action-btn" onclick="saveSalesOrder()" style="margin-right:10px;">Save Sales Order</button>
+                    <button class="action-btn" onclick="saveSalesOrder()" style="margin-right:10px;">Save & Print</button>
                     <button class="action-btn btn-primary" onclick="printSalesOrder()">Print</button>
                 </div>
             </div>
@@ -386,7 +392,7 @@
             <div class="section-box workspace" id="workspace-Recent History" style="display:none;">
                 <h3 style="margin-top:0;">Activity Log (Recent History)</h3>
                 <div style="max-height: 150px; overflow-y:auto; background:#f9f9f9; padding:10px; border:1px solid #ddd; margin-bottom:20px; font-size:13px;" id="activityLogBox">
-                    </div>
+                </div>
 
                 <h3 id="history-quotations" style="border-top:2px solid #ccc; padding-top:20px;">Quotation History Database</h3>
                 <table id="historyTable">
@@ -484,8 +490,9 @@
             <p><strong>Size Of:</strong> <span id="p-so-sizeof"></span></p>
             <p><strong>Flute:</strong> <span id="p-so-flute"></span></p>
             <p><strong>Ply:</strong> <span id="p-so-ply"></span></p>
+            <div id="p-so-paper-comb"><strong>Paper Combinations:</strong><br></div>
         </div>
-        <div class="pdf-signatures" style="margin-top:100px;">
+        <div class="pdf-signatures" style="margin-top:50px;">
             <div class="signature-line">Prepared By</div>
             <div class="signature-line">Authorized Signatory</div>
         </div>
@@ -502,42 +509,159 @@
     </div>
 
     <script>
-        // ---------------- DATABASES & MOCK DATA ----------------
         let quotationsDB = [];
         let salesOrdersDB = [];
-        let soCounter = 1; // For 000000 format
+        let soCounter = 1;
 
-        // Mock Excel Database for Customers
-        const mockCustomers = {
-            "C001": { name: "John Doe Traders", address: "123 Main St, Colombo 01" },
-            "C002": { name: "Saman Kumara", address: "45/A High Level Rd, Nugegoda" },
-            "C003": { name: "ABC Packaging Ltd", address: "Kandy Road, Peliyagoda" }
-        };
+        // Dynamic Databases initialized from uploaded Excel files
+        let uploadedCustomers = {};
+        let uploadedPaperTypes = []; // Array of objects {type: "...", name: "..."}
 
-        // Mock Excel Database for Paper Types
-        const mockPaperTypes = ["Select Paper Type...", "Kraft (KL)", "Testliner (TL)", "Fluting (FL)", "White Top (WT)"];
-
-        // ---------------- INITIALIZATION ----------------
         window.onload = function() {
             generateAutoDetails();
-            populatePaperDropdowns();
+            generatePaperRows(5); // 5 Rows according to requirement
             logAction("System initialized.");
         };
 
-        // Populate the dropdowns for Paper combinations from mock array
-        function populatePaperDropdowns() {
-            const selects = document.querySelectorAll('.paper-type-select');
-            selects.forEach(select => {
-                mockPaperTypes.forEach(type => {
-                    let option = document.createElement('option');
-                    option.value = type === "Select Paper Type..." ? "" : type;
-                    option.text = type;
-                    select.appendChild(option);
+        // --- EXCEL/CSV IMPORT & PARSING ---
+        function loadCustomersExcel(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                const text = e.target.result;
+                parseCSVToCustomers(text);
+                document.getElementById('custUploadStatus').innerText = "Uploaded & Updated: " + file.name;
+                logAction("Customer Database updated via upload: " + file.name);
+            };
+            reader.readAsText(file);
+        }
+
+        function parseCSVToCustomers(csvText) {
+            const lines = csvText.split(/\r\n|\n/);
+            // Skip header index 0
+            for (let i = 1; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if(!line) continue;
+                
+                // Handling CSV quotes inside addresses
+                let row = [];
+                let inQuotes = false;
+                let entry = '';
+                for(let char of line) {
+                    if (char === '"') { inQuotes = !inQuotes; }
+                    else if (char === ',' && !inQuotes) {
+                        row.push(entry.replace(/^"|"$/g, '').trim());
+                        entry = '';
+                    } else { entry += char; }
+                }
+                row.push(entry.replace(/^"|"$/g, '').trim());
+
+                if (row.length >= 3) {
+                    let custId = row[0];
+                    let custName = row[1];
+                    let custAddr = row[2];
+                    if (custId) {
+                        uploadedCustomers[custId] = { name: custName, address: custAddr };
+                    }
+                }
+            }
+        }
+
+        function loadPaperExcel(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                const text = e.target.result;
+                parseCSVToPaperTypes(text);
+                document.getElementById('paperUploadStatus').innerText = "Uploaded & Updated: " + file.name;
+                logAction("Paper Database updated via upload: " + file.name);
+            };
+            reader.readAsText(file);
+        }
+
+        function parseCSVToPaperTypes(csvText) {
+            const lines = csvText.split(/\r\n|\n/);
+            uploadedPaperTypes = []; // Reset array
+            
+            for (let i = 1; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if(!line) continue;
+                
+                const parts = line.split(',');
+                if (parts.length >= 2) {
+                    uploadedPaperTypes.push({
+                        type: parts[0].trim(),
+                        name: parts[1].trim()
+                    });
+                }
+            }
+            // Update the dropdowns directly
+            updatePaperDropdownsOptions();
+        }
+
+        function updatePaperDropdownsOptions() {
+            const rowContainers = document.querySelectorAll('.paper-row');
+            rowContainers.forEach(container => {
+                const selectEl = container.querySelector('.paper-name-select');
+                const typeVal = container.querySelector('.paper-type-input').value.toLowerCase();
+                
+                // Clear dropdown except placeholder
+                selectEl.innerHTML = '<option value="">Select Paper Name...</option>';
+                
+                // Filter and append
+                uploadedPaperTypes.forEach(pt => {
+                    if (pt.type.toLowerCase().includes(typeVal) || typeVal === "") {
+                        let opt = document.createElement('option');
+                        opt.value = pt.name;
+                        opt.text = `${pt.name} (${pt.type})`;
+                        selectEl.appendChild(opt);
+                    }
                 });
             });
         }
 
-        // ---------------- MENU & TABS LOGIC ----------------
+        // Generate 5 Rows for Paper Combinations (GSM + Type / Select Filter)
+        function generatePaperRows(count) {
+            const container = document.getElementById('paperRowsContainer');
+            container.innerHTML = '';
+            
+            for (let i = 0; i < count; i++) {
+                let rowDiv = document.createElement('div');
+                rowDiv.className = 'paper-row';
+                rowDiv.style.display = 'flex';
+                rowDiv.style.marginBottom = '5px';
+                
+                rowDiv.innerHTML = `
+                    <input type="text" placeholder="GSM" class="table-input paper-gsm-input" style="border:1px solid #ccc; padding:4px; width:60px; margin-right:5px;">
+                    <input type="text" placeholder="Type filter (e.g., Test, Kraft)" class="table-input paper-type-input" style="border:1px solid #ccc; padding:4px; width:130px; margin-right:5px;" oninput="filterPaperNames(this)">
+                    <select class="table-input paper-name-select" style="border:1px solid #ccc; padding:4px; width:150px;">
+                        <option value="">Select Paper Name...</option>
+                    </select>
+                `;
+                container.appendChild(rowDiv);
+            }
+        }
+
+        function filterPaperNames(typeInputObj) {
+            const parentRow = typeInputObj.parentElement;
+            const selectEl = parentRow.querySelector('.paper-name-select');
+            const filterVal = typeInputObj.value.toLowerCase();
+
+            selectEl.innerHTML = '<option value="">Select Paper Name...</option>';
+            
+            uploadedPaperTypes.forEach(pt => {
+                if(pt.type.toLowerCase().includes(filterVal) || filterVal === "") {
+                    let opt = document.createElement('option');
+                    opt.value = pt.name;
+                    opt.text = `${pt.name} (${pt.type})`;
+                    selectEl.appendChild(opt);
+                }
+            });
+        }
+
+        // --- MENU & TABS LOGIC ---
         window.onclick = function(event) {
             if (!event.target.matches('.dropbtn')) {
                 let dropdowns = document.getElementsByClassName("dropdown");
@@ -557,27 +681,21 @@
         function switchTab(tabName) {
             document.getElementById('dynamic-title').innerText = tabName;
             
-            // Sidebar active button logic
             const buttons = document.querySelectorAll('.sidebar button');
             buttons.forEach(btn => btn.classList.remove('active'));
-            // Try to set active class if button exists (Recent history might be separate)
             let activeBtn = document.getElementById('btn-' + tabName);
             if(activeBtn) activeBtn.classList.add('active');
 
-            // Hide all workspaces
             const workspaces = document.querySelectorAll('.workspace');
             workspaces.forEach(ws => ws.style.display = 'none');
 
-            // Show selected workspace
             const targetWorkspace = document.getElementById('workspace-' + tabName);
             if(targetWorkspace) targetWorkspace.style.display = 'block';
 
-            // Specific logic for tabs
             if(tabName === 'Quotations') generateAutoDetails();
             if(tabName === 'Sales Orders') generateSODetails();
         }
 
-        // ---------------- LOGGING SYSTEM ----------------
         function logAction(message) {
             const time = new Date().toLocaleString();
             const logBox = document.getElementById('activityLogBox');
@@ -585,10 +703,10 @@
             logEntry.style.borderBottom = "1px dotted #ccc";
             logEntry.style.padding = "4px 0";
             logEntry.innerText = `[${time}] - ${message}`;
-            logBox.prepend(logEntry); // Add to top
+            logBox.prepend(logEntry);
         }
 
-        // ---------------- QUOTATION LOGIC (Unchanged functionality) ----------------
+        // --- QUOTATION ---
         function generateAutoDetails() {
             const now = new Date();
             const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
@@ -682,7 +800,6 @@
             logAction(`Quotation Saved: ${qNo} for ${customer}`);
             alert("Quotation Saved Successfully to History!");
             
-            // Reset fields
             document.getElementById('validUntil').value = '';
             document.getElementById('customerId').value = '';
             document.getElementById('customerName').value = '';
@@ -698,18 +815,18 @@
             logAction(`Quotation Printed.`);
         }
 
-        // ---------------- SALES ORDER LOGIC (NEW) ----------------
+        // --- SALES ORDERS ---
         function generateSODetails() {
             document.getElementById('soDateTime').value = new Date().toLocaleString();
             document.getElementById('soNumber').value = String(soCounter).padStart(6, '0');
         }
 
         function autofillCustomerSO() {
-            const cid = document.getElementById('soCustomerId').value.trim().toUpperCase();
-            if(mockCustomers[cid]) {
-                document.getElementById('soCustomerName').value = mockCustomers[cid].name;
-                document.getElementById('soCustomerAddress').value = mockCustomers[cid].address;
-                logAction(`Customer ${cid} auto-filled from database.`);
+            const cid = document.getElementById('soCustomerId').value.trim();
+            if(uploadedCustomers[cid]) {
+                document.getElementById('soCustomerName').value = uploadedCustomers[cid].name;
+                document.getElementById('soCustomerAddress').value = uploadedCustomers[cid].address;
+                logAction(`Customer ${cid} auto-filled from uploaded list.`);
             } else {
                 document.getElementById('soCustomerName').value = '';
                 document.getElementById('soCustomerAddress').value = '';
@@ -731,8 +848,21 @@
             
             let plyEl = document.querySelector('input[name="soPly"]:checked');
             document.getElementById('p-so-ply').innerText = plyEl ? plyEl.value : '-';
+
+            const combContainer = document.getElementById('p-so-paper-comb');
+            // clear previous
+            combContainer.innerHTML = '<strong>Paper Combinations:</strong><br>';
+            const rows = document.querySelectorAll('.paper-row');
+            rows.forEach((row, idx) => {
+                const gsm = row.querySelector('.paper-gsm-input').value;
+                const name = row.querySelector('.paper-name-select').value;
+                if(gsm || name) {
+                    combContainer.innerHTML += `Row ${idx+1}: GSM: ${gsm || '-'}, Name: ${name || '-'}<br>`;
+                }
+            });
         }
 
+        // 6. Support for Save & Print / Print 2 separate Buttons
         function saveSalesOrder() {
             const soNo = document.getElementById('soNumber').value;
             const customer = document.getElementById('soCustomerName').value || 'Unknown Customer';
@@ -746,22 +876,27 @@
             const soHistoryBody = document.getElementById('soHistoryBody');
             const newRow = document.createElement('tr');
             
-            // 5. Action column includes Approved button for Production Order
+            // 2. Separate History Table Logged properly under SO, 5. Action with Auto Production Order Trigger
             newRow.innerHTML = `
                 <td>${dateTime}</td>
                 <td>${customer}</td>
                 <td><span style="color:red; font-weight:bold;">${soNo}</span></td>
                 <td><button class="action-btn" onclick="viewAttachment('SO', ${soIndex})">View Attached</button></td>
-                <td><button class="action-btn btn-primary" onclick="approveToProduction(this, '${soNo}')">Approved (Send to PO)</button></td>
+                <td><button class="action-btn btn-primary" onclick="approveToProduction(this, '${soNo}')">Approved (Production Order Created)</button></td>
             `;
             soHistoryBody.appendChild(newRow);
 
             logAction(`Sales Order Saved: ${soNo} for ${customer}`);
-            alert(`Sales Order ${soNo} Saved Successfully to History!`);
+            alert(`Sales Order ${soNo} Saved Successfully to History & Printed!`);
+
+            // Execute print layout trigger automatically
+            document.getElementById('printLayoutSO').style.display = 'block';
+            window.print();
+            document.getElementById('printLayoutSO').style.display = 'none';
             
-            soCounter++; // Increment for next order
+            soCounter++;
             
-            // Reset basic form fields for next use
+            // Reset fields
             document.getElementById('soCustomerId').value = '';
             document.getElementById('soCustomerName').value = '';
             document.getElementById('soCustomerAddress').value = '';
@@ -778,14 +913,14 @@
         }
 
         function approveToProduction(btn, soNo) {
-            alert(`Approved! Sales Order ${soNo} details successfully sent to Production Order creation.`);
-            btn.innerText = "Sent to Prod. Order";
+            alert(`Production Order Successfully Created for Sales Order ${soNo}!`);
+            btn.innerText = "Production Order Active";
             btn.disabled = true;
             btn.style.backgroundColor = '#5bc0de';
-            logAction(`Sales Order ${soNo} approved and sent to Production Orders.`);
+            logAction(`Production Order initiated for SO: ${soNo}.`);
         }
 
-        // ---------------- SHARED MODAL LOGIC ----------------
+        // --- SHARED MODALS ---
         function viewAttachment(type, index) {
             const modal = document.getElementById('viewModal');
             const modalArea = document.getElementById('modalPrintArea');
