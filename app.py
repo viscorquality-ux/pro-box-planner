@@ -10,8 +10,8 @@ def dashboard():
 # Routes for the new windows
 @app.route('/programme-plan')
 def programme_plan():
-    return "<h1>Programme Plan Window</h1><p>Content goes here.</p>"
-
+    # Render the new programme_plan.html template
+    return render_template('programme_plan.html')
 @app.route('/inventory')
 def inventory():
     return "<h1>Inventory Window</h1><p>Content goes here.</p>"
