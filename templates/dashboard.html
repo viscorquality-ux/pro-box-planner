@@ -41,6 +41,7 @@
             flex-direction: column;
             justify-content: center;
             min-height: 120px;
+            cursor: pointer;
         }
         .card:hover {
             background-color: #e9ecef;
@@ -50,12 +51,11 @@
         .instruction-text {
             margin-top: 15px;
             font-size: 0.75em;
-            color: #d9534f; /* Red color matching your pen */
+            color: #d9534f;
             font-weight: normal;
         }
-        /* Center the 3rd party card on the 3rd row */
         .center-card {
-            grid-column: 2; /* Puts it in the middle column of a 3-column grid */
+            grid-column: 2;
         }
         .footer {
             text-align: center;
@@ -72,27 +72,27 @@
 
     <div class="container">
         <div class="grid">
-            <a href="/programme-plan" target="_blank" class="card">
+            <a href="/programme-plan" onclick="openPopup(event, this.href, 'ProgrammePlan')" class="card">
                 Programme Plan
             </a>
-            <a href="/inventory" target="_blank" class="card">
+            <a href="/inventory" onclick="openPopup(event, this.href, 'Inventory')" class="card">
                 Inventory
             </a>
-            <a href="/production-floor" target="_blank" class="card">
+            <a href="/production-floor" onclick="openPopup(event, this.href, 'ProductionFloor')" class="card">
                 Production Floor Management
             </a>
 
-            <a href="/finished-goods" target="_blank" class="card">
+            <a href="/finished-goods" onclick="openPopup(event, this.href, 'FinishedGoods')" class="card">
                 Finished goods
             </a>
-            <a href="/maintenance" target="_blank" class="card">
+            <a href="/maintenance" onclick="openPopup(event, this.href, 'Maintenance')" class="card">
                 Maintenance
             </a>
-            <a href="/quality" target="_blank" class="card">
+            <a href="/quality" onclick="openPopup(event, this.href, 'Quality')" class="card">
                 Quality
             </a>
 
-            <a href="/third-party" target="_blank" class="card center-card">
+            <a href="/third-party" onclick="openPopup(event, this.href, 'ThirdParty')" class="card center-card">
                 3rd party services
             </a>
         </div>
@@ -101,6 +101,24 @@
     <div class="footer">
         "To be the most trusted and innovative corrugated packaging solution provider in Sri Lanka."
     </div>
+
+    <script>
+        function openPopup(event, url, windowName) {
+            // Normal link eka click kalama wena widihata tab eka open wena eka nawaththanawa
+            event.preventDefault(); 
+            
+            // Popup window eke size eka
+            let width = 800;
+            let height = 600;
+            
+            // Popup eka screen eke madata (center) genna calculations
+            let left = (window.screen.width / 2) - (width / 2);
+            let top = (window.screen.height / 2) - (height / 2);
+            
+            // Popup window eka open kirima
+            window.open(url, windowName, `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes`);
+        }
+    </script>
 
 </body>
 </html>
