@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programme Plan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Top Menu Bar */
+        .top-menu {
+            background-color: #e0e0e0;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            padding: 5px 10px;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropbtn {
+            background-color: transparent;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .dropbtn:hover { background-color: #ccc; }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 10;
+            border: 1px solid #ccc;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+            font-size: 13px;
+        }
+        .dropdown-content a:hover { background-color: #f1f1f1; }
+        .dropdown:hover .dropdown-content { display: block; }
+        
+        /* Sub Dropdown for 'New' */
+        .sub-dropdown { position: relative; }
+        .sub-dropdown-content {
+            display: none;
+            position: absolute;
+            left: 100%;
+            top: 0;
+            background-color: #fff;
+            min-width: 150px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            border: 1px solid #ccc;
+        }
+        .sub-dropdown:hover .sub-dropdown-content { display: block; }
+
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Left Sidebar */
+        .sidebar {
+            width: 200px;
+            background-color: #eaeaea;
+            border-right: 2px solid #ccc;
+            padding: 10px;
+        }
+        .sidebar button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #aaa;
+            background-color: #fff;
+            cursor: pointer;
+            text-align: left;
+            font-size: 14px;
+        }
+        .sidebar button:hover, .sidebar button.active {
+            background-color: #d0d0d0;
+            font-weight: bold;
+        }
+        .history-btn-container {
+            margin-top: 50px;
+            border-top: 2px solid #aaa;
+            padding-top: 10px;
+        }
+
+        /* Content Area */
+        .content-area {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #fff;
+        }
+        .tab-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+            text-decoration: underline;
+        }
+
+        /* Forms & Tables */
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .form-group label {
+            width: 120px;
+            font-size: 14px;
+        }
+        .form-group input {
+            padding: 5px;
+            border: 1px solid #ccc;
+            flex: 1;
+            max-width: 300px;
+        }
+        .form-group .auto-text {
+            color: red;
+            margin-left: 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+        table, th, td {
+            border: 1px solid #333;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            font-size: 14px;
+        }
+        th { background-color: #f0f0f0; }
+        
+        .table-input {
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            background: transparent;
+        }
+        
+        .action-btn {
+            padding: 5px 10px;
+            background-color: #e0e0e0;
+            border: 1px solid #aaa;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+        
+        /* Sections */
+        .section-box {
+            border: 1px solid #333;
+            padding: 15px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .section-title {
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background: #fff;
+            padding: 0 5px;
+            font-weight: bold;
+        }
+
+        .align-right { text-align: right; }
+    </style>
+</head>
+<body>
+
+    <div class="top-menu">
+        <div class="dropdown">
+            <button class="dropbtn">File</button>
+            <div class="dropdown-content">
+                <div class="sub-dropdown">
+                    <a href="#">New &raquo;</a>
+                    <div class="sub-dropdown-content">
+                        <a href="#" onclick="switchTab('Quotations')">Quotation</a>
+                        <a href="#" onclick="switchTab('Sales Orders')">Sales Order</a>
+                        <a href="#" onclick="switchTab('Production Orders')">Production Order</a>
+                        <a href="#" onclick="switchTab('Programme Sheets')">Programme Sheet</a>
+                    </div>
+                </div>
+                <a href="#" onclick="alert('Save functionality will connect to DB')">Save</a>
+                <a href="#">Save As</a>
+                <a href="#" onclick="window.print()">Print</a>
+                <a href="#">Options</a>
+                <a href="#">Share</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Home</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="document.getElementById('importFile').click()">Import (Attachments)</a>
+                <input type="file" id="importFile" style="display:none;" accept=".pdf,.png,.jpg,.jpeg">
+                <a href="#" onclick="document.body.style.zoom = '120%'">Zoom In</a>
+                <a href="#" onclick="document.body.style.zoom = '100%'">Zoom Out</a>
+                <a href="#" onclick="exportToExcel()">Export (Excel)</a>
+                <a href="#">Undo</a>
+                <a href="#">Redo</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">View</button>
+            <div class="dropdown-content">
+                <a href="#history-section">Quotation History</a>
+                <a href="#history-section">Sales History</a>
+                <a href="#history-section">Production Order History</a>
+                <a href="#history-section">Programme Sheet History</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Help</button>
+            <div class="dropdown-content">
+                <a href="https://www.google.com/search?q=help" target="_blank">Help</a>
+                <a href="http://www.PackwellLanka.com" target="_blank">Contact Support</a>
+                <a href="https://docs.google.com/forms/" target="_blank">Feedback</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <button id="btn-Quotations" class="active" onclick="switchTab('Quotations')">Quotations</button>
+            <button id="btn-Sales Orders" onclick="switchTab('Sales Orders')">Sales Orders</button>
+            <button id="btn-Production Orders" onclick="switchTab('Production Orders')">Production Orders</button>
+            <button id="btn-Programme Sheets" onclick="switchTab('Programme Sheets')">Programme Sheets</button>
+            
+            <div class="history-btn-container">
+                <button onclick="document.getElementById('history-section').scrollIntoView()">Document History</button>
+            </div>
+        </div>
+
+        <div class="content-area" id="printableArea">
+            <div id="dynamic-title" class="tab-title">Quotations</div>
+
+            <div class="section-box" id="workspace-Quotations">
+                <div class="section-title">Quotation Details</div>
+                
+                <div class="form-group">
+                    <label>Quotation No</label>
+                    <input type="text" id="quotationNo" readonly style="background-color: #eee;">
+                    <span class="auto-text" id="autoDateText"></span>
+                </div>
+                <div class="form-group">
+                    <label>Customer</label>
+                    <input type="text" id="customerName">
+                </div>
+                <div class="form-group">
+                    <label>Customer Address</label>
+                    <div style="display: flex; flex-direction: column; gap: 5px; flex: 1; max-width: 300px;">
+                        <input type="text" id="address1">
+                        <input type="text" id="address2">
+                        <input type="text" id="address3">
+                    </div>
+                </div>
+
+                <table id="itemTable">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" class="table-input desc"></td>
+                            <td><input type="number" class="table-input qty" oninput="calculateTotal(this)"></td>
+                            <td><input type="number" class="table-input price" oninput="calculateTotal(this)"></td>
+                            <td><input type="text" class="table-input total" readonly></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="action-btn" onclick="addRow()">Add more.</button>
+
+                <div class="align-right" style="margin-top: 15px;">
+                    <button class="action-btn" onclick="saveAndPrint()">Save & Print</button>
+                </div>
+            </div>
+
+            <div class="section-box" id="history-section" style="margin-top: 40px;">
+                <div class="section-title">Quotation History</div>
+                <table id="historyTable">
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>Customer</th>
+                            <th>Quotation No</th>
+                            <th>Attachment</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyBody">
+                        </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // 2. Auto Generate Date/Time & Quotation No
+        function generateAutoDetails() {
+            const now = new Date();
+            
+            // Format for auto text (e.g., PKQ 20260627@0001)
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            
+            const randomID = String(Math.floor(Math.random() * 9999) + 1).padStart(4, '0'); // Mock ID
+            const qNo = `PKQ ${year}${month}${day}@${randomID}`;
+            
+            document.getElementById('quotationNo').value = qNo;
+            
+            // Display exact date/time near the input as requested
+            const timeString = now.toLocaleString();
+            document.getElementById('autoDateText').innerText = `Generated: ${timeString}`;
+        }
+        
+        // Run on load
+        window.onload = generateAutoDetails;
+
+        // 1. Switch Tabs & Update Title
+        function switchTab(tabName) {
+            // Update Title
+            document.getElementById('dynamic-title').innerText = tabName;
+            
+            // Update Sidebar Active state
+            const buttons = document.querySelectorAll('.sidebar button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + tabName).classList.add('active');
+
+            // Generate new ID if switching back to Quotations
+            if(tabName === 'Quotations') {
+                generateAutoDetails();
+            }
+        }
+
+        // 2. Add more rows to item table
+        function addRow() {
+            const tbody = document.querySelector('#itemTable tbody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><input type="text" class="table-input desc"></td>
+                <td><input type="number" class="table-input qty" oninput="calculateTotal(this)"></td>
+                <td><input type="number" class="table-input price" oninput="calculateTotal(this)"></td>
+                <td><input type="text" class="table-input total" readonly></td>
+            `;
+            tbody.appendChild(newRow);
+        }
+
+        // Calculate Row Total
+        function calculateTotal(element) {
+            const row = element.parentElement.parentElement;
+            const qty = parseFloat(row.querySelector('.qty').value) || 0;
+            const price = parseFloat(row.querySelector('.price').value) || 0;
+            const total = qty * price;
+            row.querySelector('.total').value = total.toFixed(2);
+        }
+
+        // 3. Save & Print Functionality
+        function saveAndPrint() {
+            const qNo = document.getElementById('quotationNo').value;
+            const customer = document.getElementById('customerName').value || 'Unknown Customer';
+            const dateTime = new Date().toLocaleString();
+            const rawDate = new Date().getTime(); // To track the 14 days
+
+            // Add to History Table
+            const historyBody = document.getElementById('historyBody');
+            const newRow = document.createElement('tr');
+            
+            newRow.innerHTML = `
+                <td>${dateTime}</td>
+                <td>${customer}</td>
+                <td>${qNo}</td>
+                <td><button class="action-btn">View Attached</button></td>
+                <td><button class="action-btn btn-primary" onclick="approveAction(this, ${rawDate})">Approved</button></td>
+            `;
+            historyBody.appendChild(newRow);
+
+            // Print the document (Requirement 7: Print specific format - defaults to printing the visible screen area)
+            window.print();
+            
+            // Reset for next entry
+            document.getElementById('customerName').value = '';
+            document.getElementById('address1').value = '';
+            document.getElementById('address2').value = '';
+            document.getElementById('address3').value = '';
+            document.querySelector('#itemTable tbody').innerHTML = `
+                <tr>
+                    <td><input type="text" class="table-input desc"></td>
+                    <td><input type="number" class="table-input qty" oninput="calculateTotal(this)"></td>
+                    <td><input type="number" class="table-input price" oninput="calculateTotal(this)"></td>
+                    <td><input type="text" class="table-input total" readonly></td>
+                </tr>`;
+            generateAutoDetails();
+        }
+
+        // 8. Approve Button Action & 14 Day Logic
+        function approveAction(btn, creationTime) {
+            const currentTime = new Date().getTime();
+            const daysDifference = (currentTime - creationTime) / (1000 * 3600 * 24);
+
+            if (daysDifference > 14) {
+                alert("This Quotation is older than 14 days and cannot be approved.");
+                btn.disabled = true;
+                btn.style.backgroundColor = 'gray';
+            } else {
+                alert("Approved! Sending data to Sales Order section...");
+                btn.innerText = "Sent to SO";
+                btn.disabled = true;
+                btn.style.backgroundColor = '#5bc0de';
+                // Logic to push data to Sales Order array/DB will go here
+            }
+        }
+
+        // 5. Mock Export to Excel
+        function exportToExcel() {
+            alert("Exporting History to Excel (.xlsx)...\n(Requires Backend logic like pandas or frontend libraries like SheetJS in production)");
+        }
+    </script>
+</body>
+</html>
