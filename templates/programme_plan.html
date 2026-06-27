@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programme Plan</title>
+    <title>Packwell Lanka - Programme Plan</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -169,11 +169,8 @@
         <div class="dropdown" id="homeMenu">
             <button class="dropbtn" onclick="toggleMenu(event, 'homeMenu')">Home</button>
             <div class="dropdown-content">
-                <a href="#" onclick="document.getElementById('importFile').click()">Import (Attachments)</a>
-                <input type="file" id="importFile" style="display:none;" accept=".pdf,.png,.jpg,.jpeg">
                 <a href="#" onclick="document.body.style.zoom = '120%'">Zoom In</a>
                 <a href="#" onclick="document.body.style.zoom = '100%'">Zoom Out</a>
-                <a href="#" onclick="exportToExcel()">Export (Excel)</a>
             </div>
         </div>
         <div class="dropdown" id="viewMenu">
@@ -181,8 +178,6 @@
             <div class="dropdown-content">
                 <a href="#" onclick="switchTab('Recent History'); document.getElementById('history-quotations').scrollIntoView();">Quotation History</a>
                 <a href="#" onclick="switchTab('Recent History'); document.getElementById('history-sales').scrollIntoView();">Sales Order History</a>
-                <a href="#">Production Order History</a>
-                <a href="#">Programme Sheet History</a>
             </div>
         </div>
         <div class="dropdown" id="helpMenu">
@@ -296,14 +291,14 @@
                 
                 <div class="form-grid" style="grid-template-columns: 1fr 1fr;">
                     <div class="excel-upload-box">
-                        <strong>Upload Customer Details (CSV/Excel):</strong><br>
-                        <input type="file" id="uploadCustomersExcel" accept=".csv, .xlsx, .xls" onchange="loadCustomersExcel(event)" style="margin-top:5px;">
-                        <span id="custUploadStatus" style="color:green; display:block; margin-top:5px;"></span>
+                        <strong>Upload Customer Details (CSV):</strong><br>
+                        <input type="file" id="uploadCustomersExcel" accept=".csv" onchange="loadCustomersExcel(event)" style="margin-top:5px;">
+                        <span id="custUploadStatus" style="color:green; display:block; margin-top:5px;">Not uploaded</span>
                     </div>
                     <div class="excel-upload-box">
-                        <strong>Upload Paper Type & Name (CSV/Excel):</strong><br>
-                        <input type="file" id="uploadPaperExcel" accept=".csv, .xlsx, .xls" onchange="loadPaperExcel(event)" style="margin-top:5px;">
-                        <span id="paperUploadStatus" style="color:green; display:block; margin-top:5px;"></span>
+                        <strong>Upload Paper Type & Name (CSV):</strong><br>
+                        <input type="file" id="uploadPaperExcel" accept=".csv" onchange="loadPaperExcel(event)" style="margin-top:5px;">
+                        <span id="paperUploadStatus" style="color:green; display:block; margin-top:5px;">Not uploaded</span>
                     </div>
                 </div>
 
@@ -325,7 +320,7 @@
                 <div class="form-grid" style="border-top:1px solid #ccc; padding-top:15px; margin-top:10px;">
                     <div>
                         <div class="form-group">
-                            <label>Customer ID (Auto-fills on entry)</label>
+                            <label>Customer ID (Auto-fills on entry after CSV load)</label>
                             <input type="text" id="soCustomerId" oninput="autofillCustomerSO()">
                         </div>
                         <div class="form-group">
@@ -377,8 +372,7 @@
 
                         <div class="details-row" style="align-items: flex-start;">
                             <label>Paper <br>Combination:</label>
-                            <div id="paperRowsContainer">
-                                </div>
+                            <div id="paperRowsContainer"></div>
                         </div>
                     </div>
                 </div>
@@ -513,38 +507,41 @@
         let salesOrdersDB = [];
         let soCounter = 1;
 
-        // Dynamic Databases initialized from uploaded Excel files
+        // Dynamic Databases initialized from uploaded CSV files
         let uploadedCustomers = {};
-        let uploadedPaperTypes = []; // Array of objects {type: "...", name: "..."}
+        let uploadedPaperTypes = []; // Stores objects with { type: "...", name: "..." }
 
         window.onload = function() {
             generateAutoDetails();
-            generatePaperRows(5); // 5 Rows according to requirement
+            generatePaperRows(5); // EXACTLY 5 rows for paper combinations
             logAction("System initialized.");
         };
 
-        // --- EXCEL/CSV IMPORT & PARSING ---
+        // --- CSV IMPORT & PARSING ---
         function loadCustomersExcel(event) {
             const file = event.target.files[0];
+            if (!file) return;
             const reader = new FileReader();
             
             reader.onload = function(e) {
                 const text = e.target.result;
                 parseCSVToCustomers(text);
-                document.getElementById('custUploadStatus').innerText = "Uploaded & Updated: " + file.name;
-                logAction("Customer Database updated via upload: " + file.name);
+                document.getElementById('custUploadStatus').innerText = "Loaded: " + file.name;
+                logAction("Customer Database imported: " + file.name);
             };
             reader.readAsText(file);
         }
 
         function parseCSVToCustomers(csvText) {
+            // Split by new line, standard CSV parsing
             const lines = csvText.split(/\r\n|\n/);
-            // Skip header index 0
+            uploadedCustomers = {}; // Reset list
+            
+            // i=1 to skip the header
             for (let i = 1; i < lines.length; i++) {
                 const line = lines[i].trim();
                 if(!line) continue;
                 
-                // Handling CSV quotes inside addresses
                 let row = [];
                 let inQuotes = false;
                 let entry = '';
@@ -570,13 +567,14 @@
 
         function loadPaperExcel(event) {
             const file = event.target.files[0];
+            if (!file) return;
             const reader = new FileReader();
             
             reader.onload = function(e) {
                 const text = e.target.result;
                 parseCSVToPaperTypes(text);
-                document.getElementById('paperUploadStatus').innerText = "Uploaded & Updated: " + file.name;
-                logAction("Paper Database updated via upload: " + file.name);
+                document.getElementById('paperUploadStatus').innerText = "Loaded: " + file.name;
+                logAction("Paper Database imported: " + file.name);
             };
             reader.readAsText(file);
         }
@@ -597,32 +595,11 @@
                     });
                 }
             }
-            // Update the dropdowns directly
-            updatePaperDropdownsOptions();
+            // After loading papers, reset and re-populate the 5 rows' select dropdowns
+            generatePaperRows(5);
         }
 
-        function updatePaperDropdownsOptions() {
-            const rowContainers = document.querySelectorAll('.paper-row');
-            rowContainers.forEach(container => {
-                const selectEl = container.querySelector('.paper-name-select');
-                const typeVal = container.querySelector('.paper-type-input').value.toLowerCase();
-                
-                // Clear dropdown except placeholder
-                selectEl.innerHTML = '<option value="">Select Paper Name...</option>';
-                
-                // Filter and append
-                uploadedPaperTypes.forEach(pt => {
-                    if (pt.type.toLowerCase().includes(typeVal) || typeVal === "") {
-                        let opt = document.createElement('option');
-                        opt.value = pt.name;
-                        opt.text = `${pt.name} (${pt.type})`;
-                        selectEl.appendChild(opt);
-                    }
-                });
-            });
-        }
-
-        // Generate 5 Rows for Paper Combinations (GSM + Type / Select Filter)
+        // Generates 5 rows for Paper Combinations
         function generatePaperRows(count) {
             const container = document.getElementById('paperRowsContainer');
             container.innerHTML = '';
@@ -632,11 +609,14 @@
                 rowDiv.className = 'paper-row';
                 rowDiv.style.display = 'flex';
                 rowDiv.style.marginBottom = '5px';
+                rowDiv.style.alignItems = 'center';
                 
+                // Added a small label for row number
                 rowDiv.innerHTML = `
+                    <span style="font-size:12px; font-weight:bold; width:35px;">R ${i+1}:</span>
                     <input type="text" placeholder="GSM" class="table-input paper-gsm-input" style="border:1px solid #ccc; padding:4px; width:60px; margin-right:5px;">
-                    <input type="text" placeholder="Type filter (e.g., Test, Kraft)" class="table-input paper-type-input" style="border:1px solid #ccc; padding:4px; width:130px; margin-right:5px;" oninput="filterPaperNames(this)">
-                    <select class="table-input paper-name-select" style="border:1px solid #ccc; padding:4px; width:150px;">
+                    <input type="text" placeholder="Type (e.g. Test liner)" class="table-input paper-type-input" style="border:1px solid #ccc; padding:4px; width:130px; margin-right:5px;" oninput="filterPaperNames(this)">
+                    <select class="table-input paper-name-select" style="border:1px solid #ccc; padding:4px; width:170px;">
                         <option value="">Select Paper Name...</option>
                     </select>
                 `;
@@ -644,18 +624,24 @@
             }
         }
 
+        // Filters the paper name dropdown according to Paper Type Input
         function filterPaperNames(typeInputObj) {
             const parentRow = typeInputObj.parentElement;
             const selectEl = parentRow.querySelector('.paper-name-select');
-            const filterVal = typeInputObj.value.toLowerCase();
+            const filterVal = typeInputObj.value.trim().toLowerCase();
 
+            // Clear current dropdown options
             selectEl.innerHTML = '<option value="">Select Paper Name...</option>';
             
+            if (filterVal === "") return;
+
+            // Find all matching options
             uploadedPaperTypes.forEach(pt => {
-                if(pt.type.toLowerCase().includes(filterVal) || filterVal === "") {
+                // e.g. if type contains filterVal like "Test liner" or "Medium"
+                if(pt.type.toLowerCase().includes(filterVal)) {
                     let opt = document.createElement('option');
                     opt.value = pt.name;
-                    opt.text = `${pt.name} (${pt.type})`;
+                    opt.text = pt.name;
                     selectEl.appendChild(opt);
                 }
             });
@@ -821,12 +807,13 @@
             document.getElementById('soNumber').value = String(soCounter).padStart(6, '0');
         }
 
+        // Auto-fills customer Name and Address based on loaded CSV data
         function autofillCustomerSO() {
             const cid = document.getElementById('soCustomerId').value.trim();
             if(uploadedCustomers[cid]) {
                 document.getElementById('soCustomerName').value = uploadedCustomers[cid].name;
                 document.getElementById('soCustomerAddress').value = uploadedCustomers[cid].address;
-                logAction(`Customer ${cid} auto-filled from uploaded list.`);
+                logAction(`Customer ${cid} auto-filled from CSV.`);
             } else {
                 document.getElementById('soCustomerName').value = '';
                 document.getElementById('soCustomerAddress').value = '';
@@ -850,19 +837,18 @@
             document.getElementById('p-so-ply').innerText = plyEl ? plyEl.value : '-';
 
             const combContainer = document.getElementById('p-so-paper-comb');
-            // clear previous
             combContainer.innerHTML = '<strong>Paper Combinations:</strong><br>';
             const rows = document.querySelectorAll('.paper-row');
             rows.forEach((row, idx) => {
                 const gsm = row.querySelector('.paper-gsm-input').value;
+                const type = row.querySelector('.paper-type-input').value;
                 const name = row.querySelector('.paper-name-select').value;
                 if(gsm || name) {
-                    combContainer.innerHTML += `Row ${idx+1}: GSM: ${gsm || '-'}, Name: ${name || '-'}<br>`;
+                    combContainer.innerHTML += `Row ${idx+1}: GSM: ${gsm || '-'}, Type: ${type || '-'}, Name: ${name || '-'}<br>`;
                 }
             });
         }
 
-        // 6. Support for Save & Print / Print 2 separate Buttons
         function saveSalesOrder() {
             const soNo = document.getElementById('soNumber').value;
             const customer = document.getElementById('soCustomerName').value || 'Unknown Customer';
@@ -876,7 +862,6 @@
             const soHistoryBody = document.getElementById('soHistoryBody');
             const newRow = document.createElement('tr');
             
-            // 2. Separate History Table Logged properly under SO, 5. Action with Auto Production Order Trigger
             newRow.innerHTML = `
                 <td>${dateTime}</td>
                 <td>${customer}</td>
@@ -889,14 +874,13 @@
             logAction(`Sales Order Saved: ${soNo} for ${customer}`);
             alert(`Sales Order ${soNo} Saved Successfully to History & Printed!`);
 
-            // Execute print layout trigger automatically
             document.getElementById('printLayoutSO').style.display = 'block';
             window.print();
             document.getElementById('printLayoutSO').style.display = 'none';
             
             soCounter++;
             
-            // Reset fields
+            // Reset Fields
             document.getElementById('soCustomerId').value = '';
             document.getElementById('soCustomerName').value = '';
             document.getElementById('soCustomerAddress').value = '';
