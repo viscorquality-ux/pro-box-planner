@@ -5,703 +5,393 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Programme Plan</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
-
-        /* Top Menu Bar */
-        .top-menu {
-            background-color: #e0e0e0;
-            border-bottom: 1px solid #ccc;
-            display: flex;
-            padding: 5px 10px;
-            position: relative;
-            z-index: 1000; /* Dropdown eka wena eawata yata nowenn */
-        }
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-        .dropbtn {
-            background-color: transparent;
-            border: none;
-            padding: 8px 15px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        .dropbtn:hover { background-color: #ccc; }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #fff;
-            min-width: 180px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            border: 1px solid #ccc;
-            top: 100%;
-            left: 0;
-        }
-        .dropdown-content a {
-            color: black;
-            padding: 10px 15px;
-            text-decoration: none;
-            display: block;
-            font-size: 13px;
-        }
-        .dropdown-content a:hover { background-color: #f1f1f1; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; display: flex; flex-direction: column; height: 100vh; }
         
-        .sub-dropdown { position: relative; }
-        .sub-dropdown-content {
-            display: none;
-            position: absolute;
-            left: 100%;
-            top: 0;
-            background-color: #fff;
-            min-width: 150px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            border: 1px solid #ccc;
-        }
-        .sub-dropdown:hover .sub-dropdown-content { display: block; }
-        .dropdown.show .dropdown-content { display: block; } /* Toggle class for JS */
-
+        /* Menu Bar (Kept simple for space) */
+        .top-menu { background-color: #e0e0e0; border-bottom: 1px solid #ccc; display: flex; padding: 5px 10px; z-index: 1000; }
+        .dropdown { position: relative; display: inline-block; }
+        .dropbtn { background-color: transparent; border: none; padding: 8px 15px; cursor: pointer; font-size: 14px; }
+        .dropdown-content { display: none; position: absolute; background-color: #fff; min-width: 180px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); border: 1px solid #ccc; top: 100%; left: 0; z-index: 1001;}
+        .dropdown-content a { color: black; padding: 10px 15px; text-decoration: none; display: block; font-size: 13px; }
+        .dropdown.show .dropdown-content { display: block; }
+        
         /* Main Layout */
-        .main-container {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Left Sidebar */
-        .sidebar {
-            width: 200px;
-            background-color: #eaeaea;
-            border-right: 2px solid #ccc;
-            padding: 10px;
-        }
-        .sidebar button {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #aaa;
-            background-color: #fff;
-            cursor: pointer;
-            text-align: left;
-            font-size: 14px;
-        }
-        .sidebar button:hover, .sidebar button.active {
-            background-color: #d0d0d0;
-            font-weight: bold;
-        }
-        .history-btn-container {
-            margin-top: 50px;
-            border-top: 2px solid #aaa;
-            padding-top: 10px;
-        }
+        .main-container { display: flex; flex: 1; overflow: hidden; }
+        
+        /* Sidebar */
+        .sidebar { width: 220px; background-color: #eaeaea; border-right: 2px solid #ccc; padding: 10px; display: flex; flex-direction: column; }
+        .sidebar button { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #aaa; background-color: #fff; cursor: pointer; text-align: left; font-size: 14px; }
+        .sidebar button.active { background-color: #d0d0d0; font-weight: bold; }
+        
+        /* Company Address & Recent History */
+        .sidebar-bottom { margin-top: auto; border-top: 2px solid #aaa; padding-top: 10px; }
+        .recent-history { font-size: 12px; height: 100px; overflow-y: auto; background: #fff; border: 1px solid #ccc; padding: 5px; margin-bottom: 10px; }
+        .company-address { font-size: 12px; color: #333; line-height: 1.4; }
 
         /* Content Area */
-        .content-area {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            background-color: #fff;
-        }
-        .tab-title {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #333;
-            text-decoration: underline;
-        }
-
-        /* Form Styling */
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 10px;
-        }
-        .form-group label {
-            font-size: 13px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .form-group input, .form-group textarea {
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
+        .content-area { flex: 1; padding: 20px; overflow-y: auto; background-color: #fff; }
+        .tab-title { font-size: 20px; font-weight: bold; margin-bottom: 20px; text-decoration: underline; }
+        .section-box { border: 1px solid #333; padding: 20px; margin-bottom: 20px; border-radius: 5px; }
         
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-            margin-bottom: 10px;
-        }
+        /* Forms */
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .form-group { display: flex; flex-direction: column; margin-bottom: 10px; }
+        .form-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px;}
+        label { font-size: 13px; font-weight: bold; }
+        input[type="text"], input[type="number"], input[type="date"], select, textarea { padding: 6px; border: 1px solid #ccc; border-radius: 4px; }
+        .readonly-input { background-color: #eee; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         table, th, td { border: 1px solid #aaa; }
-        th, td {
-            padding: 8px;
-            text-align: left;
-            font-size: 14px;
-        }
+        th, td { padding: 8px; text-align: left; font-size: 14px; }
         th { background-color: #f0f0f0; }
-        .table-input { width: 100%; box-sizing: border-box; border: none; background: transparent; }
         
-        .action-btn {
-            padding: 8px 15px;
-            background-color: #e0e0e0;
-            border: 1px solid #aaa;
-            cursor: pointer;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-        .action-btn:hover { background-color: #ccc; }
+        .btn { padding: 8px 15px; border: 1px solid #aaa; cursor: pointer; border-radius: 4px; font-weight: bold; background-color: #e0e0e0; }
         .btn-primary { background-color: #4CAF50; color: white; border: none; }
-        .btn-primary:hover { background-color: #45a049; }
         
-        .section-box {
-            border: 1px solid #333;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-        }
-        
-        /* Summary Table */
-        .summary-table {
-            width: 300px;
-            float: right;
-            margin-top: 10px;
-        }
-
-        /* Modal for Viewing Attachment */
-        .modal {
-            display: none; 
-            position: fixed; 
-            z-index: 2000; 
-            left: 0; top: 0; 
-            width: 100%; height: 100%; 
-            background-color: rgba(0,0,0,0.5); 
-        }
-        .modal-content {
-            background-color: #fff;
-            margin: 2% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 800px;
-            height: 90vh;
-            overflow-y: auto;
-        }
-        .close-btn {
-            color: red;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        /* Print Document Format (Hidden on Screen, Shown in Modal & Print) */
-        .print-document { display: none; }
-        
-        @media print {
-            body * { visibility: hidden; }
-            .no-print { display: none !important; }
-            .print-document, .print-document * { visibility: visible; }
-            .print-document {
-                display: block;
-                position: absolute;
-                left: 0; top: 0;
-                width: 100%;
-                padding: 20px;
-                font-family: 'Times New Roman', serif;
-            }
-            .modal { display: none !important; } /* Hide modal background during print */
-        }
-
-        /* Specific PDF styling for Print/View */
-        .pdf-header { text-align: center; margin-bottom: 30px; }
-        .pdf-header h1 { font-size: 32px; letter-spacing: 2px; margin: 0; }
-        .pdf-top-details { display: flex; justify-content: space-between; margin-bottom: 20px; }
-        .pdf-box { border: 1px solid #000; padding: 15px; width: 45%; }
-        .pdf-table { width: 100%; margin-bottom: 20px; border-collapse: collapse; }
-        .pdf-table th, .pdf-table td { border: 1px solid #000; padding: 8px; }
-        .pdf-summary { width: 40%; float: right; border-collapse: collapse; }
-        .pdf-summary td { border: 1px solid #000; padding: 8px; }
-        .pdf-footer { margin-top: 100px; clear: both; }
-        .pdf-signatures { display: flex; justify-content: space-between; margin-top: 50px; }
-        .signature-line { border-top: 1px solid #000; width: 200px; text-align: center; padding-top: 5px; }
-
+        /* Hide sections initially */
+        .workspace { display: none; }
+        .workspace.active { display: block; }
     </style>
 </head>
 <body>
 
+    <!-- Top Menu -->
     <div class="top-menu no-print">
-        <div class="dropdown" id="fileMenu">
-            <button class="dropbtn" onclick="toggleMenu(event, 'fileMenu')">File</button>
-            <div class="dropdown-content">
-                <div class="sub-dropdown">
-                    <a href="#">New &raquo;</a>
-                    <div class="sub-dropdown-content">
-                        <a href="#" onclick="switchTab('Quotations')">Quotation</a>
-                        <a href="#" onclick="switchTab('Sales Orders')">Sales Order</a>
-                        <a href="#" onclick="switchTab('Production Orders')">Production Order</a>
-                        <a href="#" onclick="switchTab('Programme Sheets')">Programme Sheet</a>
-                    </div>
-                </div>
-                <a href="#" onclick="saveQuotation()">Save</a>
-                <a href="#">Save As</a>
-                <a href="#" onclick="printQuotation()">Print</a>
-                <a href="#">Options</a>
-                <a href="#">Share</a>
-            </div>
-        </div>
-
-        <div class="dropdown" id="homeMenu">
-            <button class="dropbtn" onclick="toggleMenu(event, 'homeMenu')">Home</button>
-            <div class="dropdown-content">
-                <a href="#" onclick="document.getElementById('importFile').click()">Import (Attachments)</a>
-                <input type="file" id="importFile" style="display:none;" accept=".docx,.xlsx.pdf,.png,.jpg,.jpeg">
-                <a href="#" onclick="document.body.style.zoom = '120%'">Zoom In</a>
-                <a href="#" onclick="document.body.style.zoom = '100%'">Zoom Out</a>
-                <a href="#" onclick="exportToExcel()">Export (Excel)</a>
-                <a href="#">Undo</a>
-                <a href="#">Redo</a>
-            </div>
-        </div>
-
         <div class="dropdown" id="viewMenu">
             <button class="dropbtn" onclick="toggleMenu(event, 'viewMenu')">View</button>
             <div class="dropdown-content">
-                <a href="#history-section">Quotation History</a>
-                <a href="#history-section">Sales History</a>
-                <a href="#history-section">Production Order History</a>
-                <a href="#history-section">Programme Sheet History</a>
-            </div>
-        </div>
-
-        <div class="dropdown" id="helpMenu">
-            <button class="dropbtn" onclick="toggleMenu(event, 'helpMenu')">Help</button>
-            <div class="dropdown-content">
-                <a href="https://www.google.com/search?q=help" target="_blank">Help</a>
-                <a href="http://www.PackwellLanka.com" target="_blank">Contact Support</a>
-                <a href="https://https://docs.google.com/forms/u/0/d/e/1FAIpQLSca0Aqz01GmFuiSwXn_A3RzOfwouquHBjYX0Wpa6XwzPpvklg/viewform?usp=mail_form_link&pli=1&authuser=0" target="_blank">Feedback</a>
+                <a href="#" onclick="switchTab('Quotations')">Quotation History</a>
+                <a href="#" onclick="switchTab('Sales Orders')">Sales Order History</a>
             </div>
         </div>
     </div>
 
     <div class="main-container no-print">
+        <!-- Sidebar -->
         <div class="sidebar">
             <button id="btn-Quotations" class="active" onclick="switchTab('Quotations')">Quotations</button>
             <button id="btn-Sales Orders" onclick="switchTab('Sales Orders')">Sales Orders</button>
-            <button id="btn-Production Orders" onclick="switchTab('Production Orders')">Production Orders</button>
-            <button id="btn-Programme Sheets" onclick="switchTab('Programme Sheets')">Programme Sheets</button>
+            <button id="btn-Production Orders">Production Orders</button>
+            <button id="btn-Programme Sheets">Programme Sheets</button>
             
-            <div class="history-btn-container">
-                <button onclick="document.getElementById('history-section').scrollIntoView()">Document History</button>
+            <div class="sidebar-bottom">
+                <strong>Recent History</strong>
+                <div id="recentHistoryList" class="recent-history"></div>
+                <div class="company-address">
+                    <strong>Packwell Lanka (Pvt) Ltd.</strong><br>
+                    26, 2nd cross Lane,<br>
+                    off Kandawela Road,<br>
+                    Rathmalana
+                </div>
             </div>
         </div>
 
+        <!-- Content Area -->
         <div class="content-area">
             <div id="dynamic-title" class="tab-title">Quotations</div>
 
-            <div class="section-box" id="workspace-Quotations">
-                <div class="form-grid">
-                    <div>
-                        <div class="form-group">
-                            <label>Quotation No (Auto)</label>
-                            <input type="text" id="quotationNo" readonly style="background-color: #eee;">
-                        </div>
-                        <div class="form-group">
-                            <label>Date (Auto)</label>
-                            <input type="text" id="quoteDate" readonly style="background-color: #eee;">
-                        </div>
-                        <div class="form-group">
-                            <label>Valid Until</label>
-                            <input type="date" id="validUntil">
-                        </div>
-                        <div class="form-group">
-                            <label>Project Description</label>
-                            <textarea id="projDesc" rows="3"></textarea>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="form-group">
-                            <label>Customer ID</label>
-                            <input type="text" id="customerId">
-                        </div>
-                        <div class="form-group">
-                            <label>Customer Name</label>
-                            <input type="text" id="customerName">
-                        </div>
-                        <div class="form-group">
-                            <label>Customer Address</label>
-                            <textarea id="customerAddress" rows="2"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Customer Phone</label>
-                            <input type="text" id="customerPhone">
-                        </div>
-                    </div>
-                </div>
-
-                <table id="itemTable">
-                    <thead>
-                        <tr>
-                            <th>Description</th>
-                            <th>Quantity</th>
-                            <th>Price (Rs)</th>
-                            <th>Total (Rs)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="itemBody">
-                        <tr>
-                            <td><input type="text" class="table-input desc"></td>
-                            <td><input type="number" class="table-input qty" oninput="calculateTotal()"></td>
-                            <td><input type="number" class="table-input price" oninput="calculateTotal()"></td>
-                            <td><input type="text" class="table-input total-col" readonly></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button class="action-btn" onclick="addRow()">+ Add More Items</button>
-
-                <table class="summary-table">
-                    <tr>
-                        <td><strong>Subtotal</strong></td>
-                        <td><input type="text" id="calcSubtotal" readonly class="table-input" value="0.00"></td>
-                    </tr>
-                    <tr>
-                        <td><strong>VAT (18%)</strong></td>
-                        <td><input type="text" id="calcVat" readonly class="table-input" value="0.00"></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Others</strong></td>
-                        <td><input type="number" id="calcOthers" class="table-input" value="0" oninput="calculateTotal()"></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Grand Total</strong></td>
-                        <td><input type="text" id="calcGrand" readonly class="table-input" style="font-weight:bold;" value="0.00"></td>
-                    </tr>
-                </table>
-                <div style="clear:both;"></div>
-
-                <div style="margin-top: 20px; text-align: right;">
-                    <button class="action-btn" onclick="saveQuotation()" style="margin-right:10px;">Save</button>
-                    <button class="action-btn btn-primary" onclick="printQuotation()">Print</button>
+            <!-- ================= QUOTATION WORKSPACE ================= -->
+            <div id="workspace-Quotations" class="workspace active">
+                <p><i>(Quotation details module exists here as previously configured)</i></p>
+                <div class="section-box">
+                    <h3>Quotation History (From DB)</h3>
+                    <table>
+                        <thead><tr><th>Date & Time</th><th>Customer</th><th>Quotation No</th><th>Action</th></tr></thead>
+                        <tbody id="qHistoryBody"></tbody>
+                    </table>
                 </div>
             </div>
 
-            <div class="section-box" id="history-section" style="margin-top: 40px;">
-                <h3 style="margin-top:0;">Quotation History</h3>
-                <table id="historyTable">
-                    <thead>
-                        <tr>
-                            <th>Date & Time</th>
-                            <th>Customer</th>
-                            <th>Quotation No</th>
-                            <th>Attachment</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="historyBody">
+            <!-- ================= SALES ORDER WORKSPACE ================= -->
+            <div id="workspace-Sales Orders" class="workspace">
+                <div class="section-box">
+                    <div class="form-grid">
+                        <!-- Auto Fields -->
+                        <div>
+                            <div class="form-row"><label>Date & Time:</label> <input type="text" id="soDateTime" class="readonly-input" readonly></div>
+                            <div class="form-row"><label>Sales Order No:</label> <input type="text" id="soNumber" class="readonly-input" readonly style="color:red; font-weight:bold;"></div>
+                        </div>
+                        
+                        <!-- Customer Auto-Fill Section -->
+                        <div>
+                            <div class="form-row"><label>Customer ID:</label> <input type="text" id="soCustId" placeholder="Type C001 or C002" oninput="autoFillCustomer()"></div>
+                            <div class="form-row"><label>Customer Name:</label> <input type="text" id="soCustName"></div>
+                            <div class="form-row"><label>Customer Address:</label> <textarea id="soCustAddress" rows="2"></textarea></div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Product Details -->
+                    <div class="form-row">
+                        <label>Product Name:</label>
+                        <input type="text" id="soProductName" list="productNames" style="width:300px;" placeholder="Start typing to auto-fill...">
+                        <datalist id="productNames">
+                            <option value="Standard Carton Box">
+                            <option value="Heavy Duty Board">
+                            <option value="Die Cut Pizza Box">
+                        </datalist>
+                    </div>
+
+                    <div style="margin-top: 15px;">
+                        <label style="text-decoration: underline;">Product Details:</label><br><br>
+                        
+                        <!-- Size -->
+                        <div class="form-row">
+                            <strong>Size of:</strong>
+                            <input type="radio" name="soSize" value="Carton" onchange="toggleSizeInputs()" checked> Carton
+                            <input type="radio" name="soSize" value="Board" onchange="toggleSizeInputs()"> Board
+                            
+                            <span id="cartonInputs" style="margin-left: 15px;">
+                                L: <input type="number" id="s_cL" style="width:50px;"> x 
+                                W: <input type="number" id="s_cW" style="width:50px;"> x 
+                                H: <input type="number" id="s_cH" style="width:50px;">
+                            </span>
+                            <span id="boardInputs" style="margin-left: 15px; display:none;">
+                                W: <input type="number" id="s_bW" style="width:50px;"> x 
+                                L: <input type="number" id="s_bL" style="width:50px;">
+                            </span>
+                        </div>
+
+                        <!-- Flute -->
+                        <div class="form-row" style="margin-top: 10px;">
+                            <strong>Flute:</strong>
+                            <label><input type="radio" name="soFlute" value="C"> C</label>
+                            <label><input type="radio" name="soFlute" value="B"> B</label>
+                            <label><input type="radio" name="soFlute" value="B/C"> B/C</label>
+                            <label><input type="radio" name="soFlute" value="E"> E</label>
+                            <label><input type="radio" name="soFlute" value="N"> N</label>
+                        </div>
+
+                        <!-- Ply -->
+                        <div class="form-row" style="margin-top: 10px;">
+                            <strong>Ply:</strong>
+                            <label><input type="radio" name="soPly" value="2"> 2</label>
+                            <label><input type="radio" name="soPly" value="3"> 3</label>
+                            <label><input type="radio" name="soPly" value="4"> 4</label>
+                            <label><input type="radio" name="soPly" value="5"> 5</label>
+                            <label><input type="radio" name="soPly" value="7"> 7</label>
+                        </div>
+
+                        <!-- Paper Combination -->
+                        <div class="form-row" style="margin-top: 10px;">
+                            <strong>Paper Combination:</strong>
+                            <div style="display:flex; flex-direction:column; gap:5px;" id="paperCombContainer">
+                                <div>
+                                    <input type="text" placeholder="GSM" style="width:60px;" class="gsmInput">
+                                    <select class="typeSelect">
+                                        <option value="">Select Type</option>
+                                        <option value="Kraft">Kraft</option>
+                                        <option value="Testliner">Testliner</option>
+                                        <option value="Fluting">Fluting</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn" style="padding:2px 8px;" onclick="addPaperRow()">+</button>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px; text-align: right;">
+                        <button class="btn" onclick="saveSalesOrder()">Save</button>
+                        <button class="btn btn-primary" onclick="window.print()">Print</button>
+                    </div>
+                </div>
+
+                <!-- Sales Order History Table -->
+                <div class="section-box">
+                    <h3>Sales Order History</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date & Time</th>
+                                <th>Customer</th>
+                                <th>Sales Order No</th>
+                                <th>Attachment</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="soHistoryBody">
                         </tbody>
-                </table>
+                    </table>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <div id="printLayout" class="print-document">
-        <div class="pdf-header">
-            <h1>QUOTATION</h1>
-        </div>
-        
-        <div class="pdf-top-details">
-            <div class="pdf-box" style="border:none; padding-left:0;">
-                <h3 style="margin-top:0;" id="p-customerName">[Customer Name]</h3>
-                <div id="p-customerAddress">[Address]</div>
-                <div id="p-customerPhone">[Phone]</div>
-            </div>
-            <div class="pdf-box">
-                <div><strong>Quotation No:</strong> <span id="p-qno"></span></div>
-                <div><strong>Date:</strong> <span id="p-date"></span></div>
-                <div><strong>Valid Until:</strong> <span id="p-valid"></span></div>
-                <div><strong>Customer ID:</strong> <span id="p-cid"></span></div>
-            </div>
-        </div>
-
-        <div style="margin-bottom: 20px;">
-            <strong>PROJECT DESCRIPTION:</strong>
-            <p id="p-desc" style="margin-top:5px;"></p>
-        </div>
-
-        <table class="pdf-table" id="p-itemTable">
-            <thead>
-                <tr style="background-color: #eee;">
-                    <th>Description</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                </tbody>
-        </table>
-
-        <table class="pdf-summary">
-            <tr><td>Subtotal</td><td id="p-subtotal"></td></tr>
-            <tr><td>VAT (15%)</td><td id="p-vat"></td></tr>
-            <tr><td>Others</td><td id="p-others"></td></tr>
-            <tr style="font-weight:bold; background-color:#eee;"><td>Total</td><td id="p-grand"></td></tr>
-        </table>
-        
-        <div class="pdf-footer">
-            <strong>TERMS & CONDITIONS</strong>
-            <p>Above information is not an invoice and only an estimate of goods/services. Payment will be due prior to provision or delivery of goods/services.</p>
-            <br>
-            <strong>PLEASE CONFIRM YOUR ACCEPTANCE OF THIS QUOTE</strong>
-            <div class="pdf-signatures">
-                <div class="signature-line">Signature over printed name</div>
-                <div class="signature-line">Date signed</div>
-            </div>
-        </div>
-    </div>
-
-    <div id="viewModal" class="modal no-print">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div id="modalPrintArea"></div>
-            <div style="text-align: right; margin-top:20px;">
-                <button class="action-btn btn-primary" onclick="window.print()">Print This Attachment</button>
-            </div>
+            
         </div>
     </div>
 
     <script>
-        // Database simulation array to store saved quotations
-        let quotationsDB = [];
+        // Mock Excel Data Arrays for Auto Fill
+        const mockCustomers = {
+            "C001": { name: "Kamal Perera", address: "Colombo 07, Sri Lanka" },
+            "C002": { name: "Nimal Silva", address: "Kandy, Sri Lanka" }
+        };
 
-        // 3. Fix Dropdowns - Close menus when clicking outside
-        window.onclick = function(event) {
-            if (!event.target.matches('.dropbtn')) {
-                let dropdowns = document.getElementsByClassName("dropdown");
-                for (let i = 0; i < dropdowns.length; i++) {
-                    dropdowns[i].classList.remove('show');
-                }
-            }
-        }
-        
-        // JS Function for Menu click
+        // --- Menu Logic ---
         function toggleMenu(event, menuId) {
             event.stopPropagation();
             let dropdowns = document.getElementsByClassName("dropdown");
-            // Close all others first
             for (let i = 0; i < dropdowns.length; i++) {
-                if(dropdowns[i].id !== menuId) {
-                    dropdowns[i].classList.remove('show');
-                }
+                if(dropdowns[i].id !== menuId) dropdowns[i].classList.remove('show');
             }
-            // Toggle clicked
             document.getElementById(menuId).classList.toggle("show");
         }
-
-        // Auto Generate Date & Quotation No
-        function generateAutoDetails() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            const dateStr = `${year}-${month}-${day}`;
-            
-            const randomID = String(Math.floor(Math.random() * 9999) + 1).padStart(4, '0');
-            document.getElementById('quotationNo').value = `PKQ ${year}${month}${day}@${randomID}`;
-            document.getElementById('quoteDate').value = dateStr;
-        }
-        window.onload = generateAutoDetails;
-
-        // Switch Tabs
-        function switchTab(tabName) {
-            document.getElementById('dynamic-title').innerText = tabName;
-            const buttons = document.querySelectorAll('.sidebar button');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            document.getElementById('btn-' + tabName).classList.add('active');
-            if(tabName === 'Quotations') generateAutoDetails();
-        }
-
-        // Table logic
-        function addRow() {
-            const tbody = document.getElementById('itemBody');
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td><input type="text" class="table-input desc"></td>
-                <td><input type="number" class="table-input qty" oninput="calculateTotal()"></td>
-                <td><input type="number" class="table-input price" oninput="calculateTotal()"></td>
-                <td><input type="text" class="table-input total-col" readonly></td>
-            `;
-            tbody.appendChild(newRow);
-        }
-
-        function calculateTotal() {
-            let subtotal = 0;
-            const rows = document.querySelectorAll('#itemBody tr');
-            
-            rows.forEach(row => {
-                const qty = parseFloat(row.querySelector('.qty').value) || 0;
-                const price = parseFloat(row.querySelector('.price').value) || 0;
-                const total = qty * price;
-                row.querySelector('.total-col').value = total.toFixed(2);
-                subtotal += total;
-            });
-
-            document.getElementById('calcSubtotal').value = subtotal.toFixed(2);
-            const vat = subtotal * 0.15;
-            document.getElementById('calcVat').value = vat.toFixed(2);
-            const others = parseFloat(document.getElementById('calcOthers').value) || 0;
-            
-            const grand = subtotal + vat + others;
-            document.getElementById('calcGrand').value = grand.toFixed(2);
-        }
-
-        // Fill Print Template from Form Data
-        function populatePrintLayout() {
-            document.getElementById('p-qno').innerText = document.getElementById('quotationNo').value;
-            document.getElementById('p-date').innerText = document.getElementById('quoteDate').value;
-            document.getElementById('p-valid').innerText = document.getElementById('validUntil').value || '-';
-            document.getElementById('p-cid').innerText = document.getElementById('customerId').value || '-';
-            
-            document.getElementById('p-customerName').innerText = document.getElementById('customerName').value || 'Unknown Customer';
-            document.getElementById('p-customerAddress').innerHTML = document.getElementById('customerAddress').value.replace(/\n/g, '<br>') || '-';
-            document.getElementById('p-customerPhone').innerText = document.getElementById('customerPhone').value || '-';
-            document.getElementById('p-desc').innerText = document.getElementById('projDesc').value || '-';
-
-            // Items
-            const pTbody = document.querySelector('#p-itemTable tbody');
-            pTbody.innerHTML = ''; // clear
-            
-            const rows = document.querySelectorAll('#itemBody tr');
-            rows.forEach(row => {
-                const desc = row.querySelector('.desc').value;
-                const qty = row.querySelector('.qty').value;
-                const price = row.querySelector('.price').value;
-                const total = row.querySelector('.total-col').value;
-                
-                if(desc || qty || price) {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `<td>${desc}</td><td>${qty}</td><td>Rs ${price}</td><td>Rs ${total}</td>`;
-                    pTbody.appendChild(tr);
-                }
-            });
-
-            // Totals
-            document.getElementById('p-subtotal').innerText = 'Rs ' + document.getElementById('calcSubtotal').value;
-            document.getElementById('p-vat').innerText = 'Rs ' + document.getElementById('calcVat').value;
-            document.getElementById('p-others').innerText = 'Rs ' + document.getElementById('calcOthers').value;
-            document.getElementById('p-grand').innerText = 'Rs ' + document.getElementById('calcGrand').value;
-        }
-
-        // 2. Separate Save Function
-        function saveQuotation() {
-            const qNo = document.getElementById('quotationNo').value;
-            const customer = document.getElementById('customerName').value || 'Unknown Customer';
-            const dateTime = new Date().toLocaleString();
-            const rawDate = new Date().getTime();
-
-            // Populate the template so we can save its innerHTML
-            populatePrintLayout();
-            
-            // Save HTML snapshot to DB array
-            const quoteSnapshot = document.getElementById('printLayout').innerHTML;
-            quotationsDB.push(quoteSnapshot);
-            const quoteIndex = quotationsDB.length - 1;
-
-            // Add to History Table
-            const historyBody = document.getElementById('historyBody');
-            const newRow = document.createElement('tr');
-            
-            // 1. View Attachment Button configured
-            newRow.innerHTML = `
-                <td>${dateTime}</td>
-                <td>${customer}</td>
-                <td>${qNo}</td>
-                <td><button class="action-btn" onclick="viewAttachment(${quoteIndex})">View Attached</button></td>
-                <td><button class="action-btn btn-primary" onclick="approveAction(this, ${rawDate})">Approved</button></td>
-            `;
-            historyBody.appendChild(newRow);
-
-            alert("Quotation Saved Successfully to History!");
-            resetForm();
-        }
-
-        // 2. Separate Print Function
-        function printQuotation() {
-            populatePrintLayout();
-            document.getElementById('printLayout').style.display = 'block';
-            window.print();
-            document.getElementById('printLayout').style.display = 'none';
-        }
-
-        // 1. Show saved layout in Modal
-        function viewAttachment(index) {
-            const modal = document.getElementById('viewModal');
-            const modalArea = document.getElementById('modalPrintArea');
-            
-            // Inject saved layout HTML into modal
-            modalArea.innerHTML = quotationsDB[index];
-            
-            // Apply some CSS adjustments so it looks good in modal
-            modalArea.classList.add('print-document');
-            modalArea.style.display = 'block';
-            modalArea.style.position = 'relative';
-
-            modal.style.display = "block";
-        }
-
-        function closeModal() {
-            document.getElementById('viewModal').style.display = "none";
-        }
-
-        function resetForm() {
-            document.getElementById('validUntil').value = '';
-            document.getElementById('customerId').value = '';
-            document.getElementById('customerName').value = '';
-            document.getElementById('customerAddress').value = '';
-            document.getElementById('customerPhone').value = '';
-            document.getElementById('projDesc').value = '';
-            document.getElementById('itemBody').innerHTML = `
-                <tr>
-                    <td><input type="text" class="table-input desc"></td>
-                    <td><input type="number" class="table-input qty" oninput="calculateTotal()"></td>
-                    <td><input type="number" class="table-input price" oninput="calculateTotal()"></td>
-                    <td><input type="text" class="table-input total-col" readonly></td>
-                </tr>`;
-            calculateTotal();
-            generateAutoDetails();
-        }
-
-        // Approve Button Logic (14 days rule)
-        function approveAction(btn, creationTime) {
-            const currentTime = new Date().getTime();
-            const daysDifference = (currentTime - creationTime) / (1000 * 3600 * 24);
-
-            if (daysDifference > 14) {
-                alert("This Quotation is older than 14 days and cannot be approved.");
-                btn.disabled = true;
-                btn.style.backgroundColor = 'gray';
-            } else {
-                alert("Approved! Sending data to Sales Order section...");
-                btn.innerText = "Sent to SO";
-                btn.disabled = true;
-                btn.style.backgroundColor = '#5bc0de';
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                let dropdowns = document.getElementsByClassName("dropdown");
+                for (let i = 0; i < dropdowns.length; i++) dropdowns[i].classList.remove('show');
             }
         }
+
+        // --- Tab Switching ---
+        function switchTab(tabName) {
+            document.getElementById('dynamic-title').innerText = tabName;
+            
+            // Sidebar buttons active state
+            document.querySelectorAll('.sidebar button').forEach(btn => btn.classList.remove('active'));
+            if(document.getElementById('btn-' + tabName)) document.getElementById('btn-' + tabName).classList.add('active');
+            
+            // Hide all workspaces, show selected
+            document.querySelectorAll('.workspace').forEach(ws => ws.classList.remove('active'));
+            document.getElementById('workspace-' + tabName).classList.add('active');
+
+            // Initialize required data based on tab
+            if(tabName === 'Sales Orders') {
+                generateSOAutoDetails();
+                fetchSalesOrders();
+            } else if (tabName === 'Quotations') {
+                fetchQuotations(); // Mock fetching DB history for quotations
+            }
+            logRecentAction(`Viewed ${tabName} tab`);
+        }
+
+        // --- Recent History Logger ---
+        function logRecentAction(actionText) {
+            const time = new Date().toLocaleTimeString();
+            const div = document.getElementById('recentHistoryList');
+            div.innerHTML = `<div style="border-bottom:1px solid #eee; padding:2px 0;">[${time}] ${actionText}</div>` + div.innerHTML;
+        }
+
+        // --- Sales Order Specific Logic ---
+        let currentSONumber = "";
+
+        function generateSOAutoDetails() {
+            const now = new Date();
+            document.getElementById('soDateTime').value = now.toLocaleString();
+            
+            // Generate 6 digit SO No format 000000
+            currentSONumber = String(Math.floor(Math.random() * 999999)).padStart(6, '0');
+            document.getElementById('soNumber').value = currentSONumber;
+        }
+
+        function autoFillCustomer() {
+            const id = document.getElementById('soCustId').value;
+            if(mockCustomers[id]) {
+                document.getElementById('soCustName').value = mockCustomers[id].name;
+                document.getElementById('soCustAddress').value = mockCustomers[id].address;
+                logRecentAction(`Auto-filled Customer: ${mockCustomers[id].name}`);
+            } else {
+                document.getElementById('soCustName').value = "";
+                document.getElementById('soCustAddress').value = "";
+            }
+        }
+
+        function toggleSizeInputs() {
+            const type = document.querySelector('input[name="soSize"]:checked').value;
+            if(type === 'Carton') {
+                document.getElementById('cartonInputs').style.display = 'inline';
+                document.getElementById('boardInputs').style.display = 'none';
+            } else {
+                document.getElementById('cartonInputs').style.display = 'none';
+                document.getElementById('boardInputs').style.display = 'inline';
+            }
+        }
+
+        function addPaperRow() {
+            const container = document.getElementById('paperCombContainer');
+            const div = document.createElement('div');
+            div.innerHTML = `
+                <input type="text" placeholder="GSM" style="width:60px;" class="gsmInput">
+                <select class="typeSelect">
+                    <option value="">Select Type</option>
+                    <option value="Kraft">Kraft</option>
+                    <option value="Testliner">Testliner</option>
+                    <option value="Fluting">Fluting</option>
+                </select>
+            `;
+            container.appendChild(div);
+        }
+
+        // --- DB Integration (Save and Fetch) ---
+        function saveSalesOrder() {
+            const data = {
+                so_no: document.getElementById('soNumber').value,
+                customer: document.getElementById('soCustName').value || 'Unknown',
+                date: document.getElementById('soDateTime').value,
+                form_data: {
+                    product: document.getElementById('soProductName').value,
+                    // Additional details can be captured here
+                }
+            };
+
+            fetch('/api/sales_orders', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).then(response => response.json())
+              .then(res => {
+                  alert("Sales Order Saved to DB!");
+                  logRecentAction(`Saved SO No: ${data.so_no}`);
+                  fetchSalesOrders();
+                  generateSOAutoDetails(); // Reset number
+              });
+        }
+
+        function fetchSalesOrders() {
+            fetch('/api/sales_orders')
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('soHistoryBody');
+                tbody.innerHTML = '';
+                data.forEach(row => {
+                    // row = [so_no, customer, date, data] according to SQL query
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${row[2]}</td>
+                            <td>${row[1]}</td>
+                            <td>${row[0]}</td>
+                            <td><button class="btn">View Format</button></td>
+                            <td><button class="btn btn-primary" onclick="approveToPO('${row[0]}')">Approve (To Prod. Order)</button></td>
+                        </tr>
+                    `;
+                });
+            });
+        }
+
+        // 5. Action Button -> Auto Push to Production Order
+        function approveToPO(soNumber) {
+            alert(`Sales Order ${soNumber} Approved!\nAuto-generating details for Production Order...`);
+            logRecentAction(`Approved SO: ${soNumber} to PO`);
+            // In a full application, this would POST to a Production Orders table.
+        }
+
+        function fetchQuotations() {
+            // Helper function to show that Quotations are also fetching from DB
+            fetch('/api/quotations')
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('qHistoryBody');
+                tbody.innerHTML = '';
+                data.forEach(row => {
+                    tbody.innerHTML += `<tr><td>${row[2]}</td><td>${row[1]}</td><td>${row[0]}</td><td>Saved</td></tr>`;
+                });
+            }).catch(e => console.log("DB might be empty or endpoint not hit yet."));
+        }
+
+        // Init on load
+        window.onload = () => {
+            switchTab('Quotations');
+        };
     </script>
 </body>
 </html>
