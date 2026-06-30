@@ -3,551 +3,501 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Packwell Lanka - Programme Plan</title>
+    <title>Packwell Lanka - System</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #34495e;
-            --accent-color: #3498db;
-            --success-color: #2ecc71;
-            --danger-color: #e74c3c;
-            --bg-color: #f4f7f6;
-            --border-color: #bdc3c7;
+            --bg-color: #f0f2f5;
+            --border-color: #333;
+            --header-bg: #e4e4e4;
+            --accent: #2c3e50;
         }
 
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
         body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             margin: 0; 
             padding: 0; 
             background-color: var(--bg-color); 
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
         }
-        
-        /* Menu Bar Styles */
-        .top-menu { 
-            background-color: var(--primary-color); 
-            color: white; 
-            display: flex; 
-            padding: 0 10px; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-        .dropdown { position: relative; display: inline-block; }
-        .dropbtn { 
-            background-color: transparent; 
-            color: white; 
-            border: none; 
-            padding: 15px 20px; 
-            cursor: pointer; 
-            font-size: 15px; 
-            transition: background-color 0.3s;
-        }
-        .dropbtn:hover { background-color: var(--secondary-color); }
-        .dropdown-content { 
-            display: none; 
-            position: absolute; 
-            background-color: white; 
-            min-width: 200px; 
-            box-shadow: 0px 8px 16px rgba(0,0,0,0.2); 
-            z-index: 1000; 
-            border-radius: 4px;
-        }
-        .dropdown-content a { 
-            color: #333; 
-            padding: 12px 16px; 
-            text-decoration: none; 
-            display: block; 
-            border-bottom: 1px solid #eee;
-            font-size: 14px;
-        }
-        .dropdown-content a:hover { background-color: #f1f1f1; color: var(--accent-color); }
-        .dropdown:hover .dropdown-content { display: block; }
 
-        /* Sidebar Tabs */
-        .sidebar { 
-            width: 220px; 
-            background-color: white; 
-            position: fixed; 
-            height: calc(100vh - 50px); 
-            border-right: 1px solid var(--border-color); 
-            overflow-y: auto;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+        /* Top Menu */
+        .top-menu {
+            display: flex;
+            background-color: #fff;
+            border-bottom: 2px solid var(--border-color);
+            padding: 0 10px;
         }
-        .sidebar button { 
-            width: 100%; 
-            padding: 15px; 
-            text-align: left; 
-            border: none; 
-            background: none; 
-            cursor: pointer; 
-            border-bottom: 1px solid #eee; 
-            font-size: 14px;
+        .top-menu button {
+            background: none;
+            border: 1px solid transparent;
+            border-right: 1px solid #ccc;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .top-menu button:hover { background-color: #eee; border: 1px solid #999; }
+
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Sidebar Layout */
+        .sidebar {
+            width: 250px;
+            background-color: #fff;
+            border-right: 2px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar-tabs {
+            flex: 1;
+            padding: 10px;
+        }
+        .sidebar button.nav-btn {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            text-align: left;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            font-size: 16px;
             font-weight: 500;
-            color: #555;
-            transition: all 0.2s;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px #ccc;
         }
-        .sidebar button i { margin-right: 10px; width: 20px; text-align: center; }
-        .sidebar button:hover { background-color: #f8f9fa; color: var(--accent-color); }
-        .sidebar button.active { 
-            background-color: #e8f4f8; 
-            color: var(--accent-color); 
-            border-left: 4px solid var(--accent-color);
+        .sidebar button.nav-btn:hover { background: #f9f9f9; }
+        .sidebar button.nav-btn.active {
+            background: #eef4fa;
+            border-left: 5px solid var(--accent);
+            font-weight: bold;
+        }
+        .recent-history {
+            border: 1px solid var(--border-color);
+            margin: 10px;
+            height: 150px;
+            padding: 5px;
+            font-size: 14px;
+        }
+        .recent-history-title {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+        }
+        .company-info {
+            padding: 15px;
+            border-top: 2px solid var(--border-color);
+            font-size: 13px;
+            line-height: 1.5;
+            font-weight: bold;
         }
 
         /* Content Area */
-        .content { 
-            margin-left: 220px; 
-            padding: 20px; 
-            height: calc(100vh - 50px); 
-            overflow-y: auto; 
-            box-sizing: border-box;
-        }
-        .tab-content { display: none; animation: fadeIn 0.3s; }
-        .active-tab { display: block; }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* Form & Table Styles */
-        .card {
-            background: white;
-            border-radius: 8px;
+        .content {
+            flex: 1;
             padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            overflow-y: auto;
+            background-color: #fff;
+        }
+
+        /* Inner Tabs (Like in sketch) */
+        .inner-tabs {
+            display: flex;
+            border-bottom: 2px solid var(--border-color);
             margin-bottom: 20px;
         }
-        .card-header {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 5px;
-            display: inline-block;
-        }
-
-        /* Form Grid */
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-        }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { 
-            display: block; 
-            font-size: 13px; 
-            font-weight: bold; 
-            color: #555;
-            margin-bottom: 5px; 
-        }
-        .form-group input, .form-group select { 
-            width: 100%; 
-            padding: 8px 10px; 
-            border: 1px solid #ccc; 
-            border-radius: 4px; 
-            box-sizing: border-box;
-            font-size: 14px;
-        }
-        .form-group input:focus, .form-group select:focus {
-            border-color: var(--accent-color);
-            outline: none;
-            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
-        }
-
-        /* Tables */
-        table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            margin-top: 15px; 
-            background: white;
-        }
-        th, td { 
-            border: 1px solid #e0e0e0; 
-            padding: 10px; 
-            text-align: left; 
-            font-size: 13px;
-        }
-        th { 
-            background-color: var(--primary-color); 
-            color: white; 
-            font-weight: 500;
-        }
-        tr:nth-child(even) { background-color: #f9f9f9; }
-        tr:hover { background-color: #f1f5f9; }
-
-        /* Action Buttons */
-        .btn-group { display: flex; gap: 5px; }
-        .btn {
-            padding: 6px 12px;
-            border: none;
-            border-radius: 4px;
+        .inner-tabs .inner-tab {
+            padding: 8px 15px;
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+            background: #f9f9f9;
+            margin-right: 5px;
+            border-radius: 5px 5px 0 0;
             cursor: pointer;
-            font-size: 12px;
-            color: white;
-            transition: opacity 0.2s;
-        }
-        .btn:hover { opacity: 0.8; }
-        .btn-view { background-color: var(--accent-color); }
-        .btn-download { background-color: var(--success-color); }
-        .btn-delete { background-color: var(--danger-color); }
-        
-        .action-bar {
+            font-weight: bold;
             display: flex;
-            justify-content: flex-end;
-            margin-top: 20px;
+            align-items: center;
             gap: 10px;
         }
-        .btn-save { background-color: var(--success-color); padding: 10px 20px; font-size: 14px;}
-        .btn-clear { background-color: #95a5a6; padding: 10px 20px; font-size: 14px;}
+        .inner-tabs .inner-tab.active {
+            background: #fff;
+            border-bottom: 2px solid #fff;
+            margin-bottom: -2px;
+        }
+        .inner-tabs .inner-tab span.close {
+            color: red;
+            font-size: 12px;
+        }
 
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.6);
-        }
-        .modal-content {
-            background-color: #fff;
-            margin: 5% auto;
-            padding: 20px;
-            border-radius: 8px;
-            width: 80%;
-            max-width: 800px;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-        }
-        .close {
-            position: absolute;
-            right: 20px;
-            top: 15px;
-            color: #aaa;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .close:hover { color: black; }
+        /* Tab Content Containers */
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
 
-        /* Print formatting */
-        @media print {
-            body * { visibility: hidden; }
-            #printArea, #printArea * { visibility: visible; }
-            #printArea { position: absolute; left: 0; top: 0; width: 100%; }
+        /* Form Common Styles */
+        .form-row { display: flex; margin-bottom: 15px; align-items: flex-start; gap: 20px; }
+        .form-group { display: flex; align-items: center; gap: 10px; flex: 1; }
+        .form-group label { font-size: 16px; font-weight: 500; min-width: 130px; }
+        .form-group input[type="text"], .form-group textarea {
+            flex: 1;
+            padding: 6px;
+            border: 1px solid var(--border-color);
+            font-size: 15px;
         }
+        .form-group textarea { resize: vertical; height: 70px; }
+        .auto-gen-text { color: red; font-size: 14px; font-weight: bold; margin-left: 10px; }
+
+        /* Custom Input Groups (Dimensions etc) */
+        .dimension-group { display: flex; align-items: center; gap: 10px; }
+        .dimension-group input[type="text"] { width: 60px; text-align: center; border: 1px solid var(--border-color); padding: 4px; }
+        
+        /* Radio Groups */
+        .radio-group { display: flex; align-items: center; gap: 15px; margin-left: 20px; }
+        .radio-item { display: flex; align-items: center; gap: 5px; font-size: 15px; }
+
+        /* Paper Combination Selects */
+        .paper-combo-grid { display: grid; gap: 5px; max-width: 500px; margin-left: 140px; margin-bottom: 15px; }
+        .paper-combo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .paper-combo-row select { padding: 5px; border: 1px solid var(--border-color); width: 100%; }
+
+        /* Dynamic Table for Quotations */
+        .entry-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+        .entry-table th, .entry-table td { border: 1px solid var(--border-color); padding: 8px; text-align: center; }
+        .entry-table th { background: #f0f0f0; }
+        .entry-table input { width: 100%; border: none; outline: none; text-align: center; background: transparent; font-size: 15px; }
+        .entry-table input.desc-input { text-align: left; }
+        
+        .btn-add { border: 1px solid var(--border-color); background: #fff; padding: 5px 15px; cursor: pointer; font-weight: bold; }
+        .btn-add:hover { background: #eee; }
+        
+        .action-right { display: flex; justify-content: flex-end; margin-top: 10px; margin-bottom: 20px;}
+        .btn-save { border: 1px solid var(--border-color); background: #fff; padding: 8px 20px; cursor: pointer; font-weight: bold; font-size: 15px; color: red; }
+        .btn-save:hover { background: #ffebeb; }
+
+        /* History Tables */
+        .history-section h3 { margin-bottom: 10px; font-size: 18px; border-bottom: 1px solid #ccc; padding-bottom: 5px;}
+        .history-table { width: 100%; border-collapse: collapse; }
+        .history-table th, .history-table td { border: 1px solid var(--border-color); padding: 8px; text-align: left; font-size: 14px;}
+        .history-table th { background: #f0f0f0; }
+
+        .right-align-group { justify-content: flex-end; margin-bottom: 15px; }
+
     </style>
 </head>
 <body>
 
+    <!-- Top Menu -->
     <div class="top-menu">
-        <div class="dropdown">
-            <button class="dropbtn"><i class="fas fa-file-alt"></i> File</button>
-            <div class="dropdown-content">
-                <a href="#" onclick="alert('Saving all progress...')"><i class="fas fa-save"></i> Save</a>
-                <a href="#"><i class="fas fa-file-download"></i> Save As...</a>
-                <a href="#" onclick="printCurrentTab()"><i class="fas fa-print"></i> Print (Screenshot)</a>
-                <a href="#" onclick="shareDoc('email')"><i class="fas fa-envelope"></i> Share via Email</a>
-                <a href="#" onclick="shareDoc('whatsapp')"><i class="fab fa-whatsapp"></i> Share via WhatsApp</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button class="dropbtn"><i class="fas fa-edit"></i> Edit</button>
-            <div class="dropdown-content">
-                <a href="#"><i class="fas fa-undo"></i> Undo</a>
-                <a href="#"><i class="fas fa-redo"></i> Redo</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button class="dropbtn"><i class="fas fa-eye"></i> View</button>
-            <div class="dropdown-content">
-                <a href="#"><i class="fas fa-history"></i> Quotation History</a>
-                <a href="#"><i class="fas fa-history"></i> Sales Orders History</a>
-                <a href="#"><i class="fas fa-history"></i> Production Orders History</a>
-                <a href="#"><i class="fas fa-history"></i> Programme Sheets History</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button class="dropbtn"><i class="fas fa-sync-alt"></i> Home (Update)</button>
-            <div class="dropdown-content">
-                <a href="#"><i class="fas fa-file-excel"></i> Update Customer Details (Excel)</a>
-                <a href="#"><i class="fas fa-file-excel"></i> Update Paper Details (Excel)</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button class="dropbtn"><i class="fas fa-question-circle"></i> Help</button>
-            <div class="dropdown-content">
-                <a href="#"><i class="fas fa-comment-dots"></i> Feedback</a>
-            </div>
-        </div>
+        <button>Home</button>
+        <button>View</button>
+        <button>Help</button>
     </div>
 
-    <div class="sidebar">
-        <button class="tab-link active" onclick="switchTab(event, 'quotation')"><i class="fas fa-file-invoice-dollar"></i> Quotation</button>
-        <button class="tab-link" onclick="switchTab(event, 'sales-order')"><i class="fas fa-shopping-cart"></i> Sales Order</button>
-        <button class="tab-link" onclick="switchTab(event, 'production-order')"><i class="fas fa-industry"></i> Production Order</button>
-        <button class="tab-link" onclick="switchTab(event, 'programme-sheet')"><i class="fas fa-clipboard-list"></i> Programme Sheet</button>
-    </div>
-
-    <div class="content" id="mainContent">
-
-        <div id="quotation" class="tab-content active-tab">
-            <div class="card" id="quotationPrintArea">
-                <div class="card-header">Create New Quotation</div>
-                
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>Quotation No:</label>
-                        <input type="text" id="q_no" placeholder="Auto-generated">
-                    </div>
-                    <div class="form-group">
-                        <label>Date:</label>
-                        <input type="date" id="q_date">
-                    </div>
-                    <div class="form-group">
-                        <label>Customer ID:</label>
-                        <input type="text" id="q_cus_id" placeholder="Enter ID to auto-fill" onchange="autoFillCustomer('q')">
-                    </div>
-                    <div class="form-group">
-                        <label>Customer Name:</label>
-                        <input type="text" id="q_cus_name" readonly>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Customer Address:</label>
-                    <input type="text" id="q_cus_address" readonly>
-                </div>
-
-                <div class="form-grid">
-                     <div class="form-group">
-                        <label>Paper Type:</label>
-                        <select id="q_paper_type">
-                            <option value="">Select Type</option>
-                            <option value="Test liner">Test liner</option>
-                            <option value="Medium">Medium</option>
-                            <option value="Kraft">Kraft</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Paper Name:</label>
-                        <select id="q_paper_name">
-                            <option value="">Select Paper</option>
-                            </select>
-                    </div>
-                </div>
-                
-                <div class="action-bar">
-                    <button class="btn btn-clear">Clear Form</button>
-                    <button class="btn btn-save" onclick="saveDocument('Quotation')">Save Quotation</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">Saved Quotations</div>
-                <table id="quotationTable">
-                    <thead>
-                        <tr>
-                            <th>Q No</th>
-                            <th>Date</th>
-                            <th>Customer Name</th>
-                            <th>Paper Details</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Q001</td>
-                            <td>2026-06-27</td>
-                            <td>CBL Foods</td>
-                            <td>Test liner - TSLNY</td>
-                            <td class="btn-group">
-                                <button class="btn btn-view" onclick="viewModal('Q001')"><i class="fas fa-eye"></i> View</button>
-                                <button class="btn btn-download"><i class="fas fa-download"></i> DL</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div id="sales-order" class="tab-content">
-            <div class="card" id="salesOrderPrintArea">
-                <div class="card-header">Create Sales Order</div>
-                
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>Sales Order No:</label>
-                        <input type="text" id="so_no" placeholder="Auto-generated">
-                    </div>
-                    <div class="form-group">
-                        <label>Reference Quotation No:</label>
-                        <input type="text" id="so_ref_q" placeholder="Enter Q No">
-                    </div>
-                    <div class="form-group">
-                        <label>Date:</label>
-                        <input type="date" id="so_date">
-                    </div>
-                </div>
-
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>Customer ID:</label>
-                        <input type="text" id="so_cus_id" placeholder="Enter ID" onchange="autoFillCustomer('so')">
-                    </div>
-                    <div class="form-group">
-                        <label>Customer Name:</label>
-                        <input type="text" id="so_cus_name" readonly>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label>Order Description / Remarks:</label>
-                    <input type="text" id="so_desc">
-                </div>
-
-                <div class="action-bar">
-                    <button class="btn btn-clear">Clear Form</button>
-                    <button class="btn btn-save" onclick="saveDocument('Sales Order')">Save Sales Order</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">Saved Sales Orders</div>
-                <table id="salesOrderTable">
-                    <thead>
-                        <tr>
-                            <th>SO No</th>
-                            <th>Ref Q.No</th>
-                            <th>Date</th>
-                            <th>Customer Name</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>SO-1001</td>
-                            <td>Q001</td>
-                            <td>2026-06-28</td>
-                            <td>CBL Foods</td>
-                            <td class="btn-group">
-                                <button class="btn btn-view" onclick="viewModal('SO-1001')"><i class="fas fa-eye"></i> View</button>
-                                <button class="btn btn-download"><i class="fas fa-download"></i> Form</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div id="production-order" class="tab-content">
-            <div class="card"><div class="card-header">Production Order Area</div><p>Content goes here...</p></div>
-        </div>
-        <div id="programme-sheet" class="tab-content">
-             <div class="card"><div class="card-header">Programme Sheet Area</div><p>Content goes here...</p></div>
-        </div>
-
-    </div>
-
-    <div id="viewModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <div id="modalPrintArea">
-                <h3 style="border-bottom:1px solid #ccc; padding-bottom:10px;">Document Preview</h3>
-                <p><strong>Document ID:</strong> <span id="modalDocId"></span></p>
-                <p>This is a generated preview based on the form data.</p>
-                </div>
-            <div class="action-bar" style="margin-top:20px; border-top:1px solid #eee; padding-top:10px;">
-                <button class="btn btn-view" onclick="window.print()">Print Document</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // --- 1. Tab Switching Logic ---
-        function switchTab(evt, tabId) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].classList.remove("active-tab");
-            }
-            tablinks = document.getElementsByClassName("tab-link");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(tabId).classList.add("active-tab");
-            evt.currentTarget.className += " active";
-        }
-
-        // --- 2. Dummy Auto Fill Logic (Simulation based on your CSV) ---
-        const dummyCustomers = {
-            'C0001': { name: 'CBL Foods', address: 'No 135, Habarakada Road, Ranala' },
-            'M0001': { name: 'Morisan Limited', address: 'hemas House, No 75, Braybrooke place, colombo 3' }
-        };
-
-        function autoFillCustomer(prefix) {
-            let id = document.getElementById(prefix + '_cus_id').value.toUpperCase();
-            if(dummyCustomers[id]) {
-                document.getElementById(prefix + '_cus_name').value = dummyCustomers[id].name;
-                if(document.getElementById(prefix + '_cus_address')) {
-                    document.getElementById(prefix + '_cus_address').value = dummyCustomers[id].address;
-                }
-            } else {
-                alert("Customer ID not found in database.");
-                document.getElementById(prefix + '_cus_name').value = "";
-                if(document.getElementById(prefix + '_cus_address')) document.getElementById(prefix + '_cus_address').value = "";
-            }
-        }
-
-        // --- 3. Save, Print & Share Actions ---
-        function saveDocument(docType) {
-            alert(docType + " Data Saved Successfully!");
-            // In reality, this will send an AJAX POST request to your /api/ endpoint
-        }
-
-        function printCurrentTab() {
-            // Find which tab is active
-            let activeTab = document.querySelector('.tab-content.active-tab');
-            if(activeTab) {
-                // Get the id of the area we want to print
-                let printAreaId = activeTab.id === 'quotation' ? 'quotationPrintArea' : 'salesOrderPrintArea';
-                
-                let originalContent = document.body.innerHTML;
-                let printContent = document.getElementById(printAreaId).innerHTML;
-                
-                document.body.innerHTML = "<html><head><title>Print Layout</title></head><body><div id='printArea' style='padding:20px; font-family:sans-serif;'>" + printContent + "</div></body></html>";
-                window.print();
-                document.body.innerHTML = originalContent;
-                location.reload(); // Reload to restore JS events
-            }
-        }
-
-        function shareDoc(method) {
-            let subject = encodeURIComponent("Packwell Lanka - System Document");
-            let body = encodeURIComponent("Please review the current document details.");
-            if(method === 'email') {
-                window.location.href = `mailto:?subject=${subject}&body=${body}`;
-            } else if (method === 'whatsapp') {
-                window.open(`https://wa.me/?text=${subject} - ${body}`, '_blank');
-            }
-        }
-
-        // --- 4. Modal Logic ---
-        function viewModal(docId) {
-            document.getElementById('modalDocId').innerText = docId;
-            document.getElementById('viewModal').style.display = "block";
-        }
-        function closeModal() {
-            document.getElementById('viewModal').style.display = "none";
-        }
+    <!-- Main Content -->
+    <div class="main-container">
         
-        // Close modal if user clicks outside of it
-        window.onclick = function(event) {
-            var modal = document.getElementById('viewModal');
-            if (event.target == modal) {
-                modal.style.display = "none";
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-tabs">
+                <button class="nav-btn active" onclick="switchMainTab('quotations', this)">Quotations</button>
+                <button class="nav-btn" onclick="switchMainTab('sales-orders', this)">Sales Orders</button>
+                <button class="nav-btn" onclick="switchMainTab('production-orders', this)">Production Orders</button>
+                <button class="nav-btn" onclick="switchMainTab('programme-sheets', this)">Programme Sheet</button>
+            </div>
+            
+            <div class="recent-history">
+                <div class="recent-history-title">Recent history.</div>
+                <!-- Mini history logs can go here -->
+            </div>
+
+            <div class="company-info">
+                Packwell Lanka (Pvt) Ltd.<br>
+                2nd Cross Lane.<br>
+                Kandawela Road.
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content">
+            
+            <!-- Inner Tabs (As drawn in the sketch) -->
+            <div class="inner-tabs">
+                <div class="inner-tab active" id="tab-btn-quotations" onclick="switchMainTab('quotations', document.querySelector('.nav-btn:nth-child(1)'))">Quotations <span class="close">x</span></div>
+                <div class="inner-tab" id="tab-btn-sales-orders" onclick="switchMainTab('sales-orders', document.querySelector('.nav-btn:nth-child(2)'))">Sales Orders <span class="close">x</span></div>
+                <div class="inner-tab" id="tab-btn-production-orders">Production orders <span class="close">x</span></div>
+                <div class="inner-tab" id="tab-btn-programme-sheets">Programme sheets <span class="close">x</span></div>
+            </div>
+
+            <!-- ================= QUOTATION TAB ================= -->
+            <div id="quotations" class="tab-pane active">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Quotation No</label>
+                        <input type="text" id="q_no">
+                        <span class="auto-gen-text">(PKQ 20260627 Q0001)</span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Customer.</label>
+                        <input type="text" id="q_customer">
+                    </div>
+                    <div class="form-group">
+                        <label>Customer Address</label>
+                        <!-- Used textarea to simulate the 3 lines in the drawing -->
+                        <textarea id="q_address"></textarea>
+                    </div>
+                </div>
+
+                <!-- Dynamic Item Table -->
+                <table class="entry-table" id="quoteTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 50%;">Description</th>
+                            <th style="width: 15%;">Quantity</th>
+                            <th style="width: 15%;">Price</th>
+                            <th style="width: 20%;">Total .</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" class="desc-input"></td>
+                            <td><input type="number" class="qty" oninput="calculateRow(this)"></td>
+                            <td><input type="number" class="price" oninput="calculateRow(this)"></td>
+                            <td><input type="text" class="total" readonly></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn-add" onclick="addQuoteRow()">Add more .</button>
+
+                <div class="action-right">
+                    <button class="btn-save" onclick="alert('Quotation Saved!')">Save & Print .</button>
+                </div>
+
+                <!-- Quotation History -->
+                <div class="history-section">
+                    <h3>Quotation history .</h3>
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Date & time.</th>
+                                <th>Customer.</th>
+                                <th>Quotation No</th>
+                                <th>Attachment</th>
+                                <th>Action.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2026-06-27 10:30</td>
+                                <td>CBL Foods</td>
+                                <td>Q0001</td>
+                                <td>📄 View</td>
+                                <td><button>Print</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <!-- ================= SALES ORDERS TAB ================= -->
+            <div id="sales-orders" class="tab-pane">
+                
+                <div class="form-row right-align-group">
+                    <div class="form-group" style="flex: none;">
+                        <label style="min-width: auto; margin-right: 10px;">Sales Order No</label>
+                        <input type="text" id="so_no" value="000000" style="color: red; border: 1px solid red; width: 120px; text-align: center;">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="flex: 0.6;">
+                        <label>Customer Name</label>
+                        <input type="text" id="so_customer">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group" style="flex: 0.6;">
+                        <label>Customer Address</label>
+                        <textarea id="so_address"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Product Name .</label>
+                        <input type="text" id="so_product">
+                    </div>
+                </div>
+
+                <h4 style="margin-bottom: 10px; text-decoration: underline;">Product Details :</h4>
+                
+                <div class="form-row" style="margin-bottom: 5px;">
+                    <div class="form-group">
+                        <label>Size of</label>
+                        <div class="radio-item"><input type="radio" name="size_type" checked> Carton</div>
+                        <div class="dimension-group" style="margin-left: 20px;">
+                            <input type="text" placeholder="L"> <span style="color:red">*</span> 
+                            <input type="text" placeholder="W"> <span style="color:red">*</span> 
+                            <input type="text" placeholder="H">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label></label>
+                        <div class="radio-item"><input type="radio" name="size_type"> Board .</div>
+                        <div class="dimension-group" style="margin-left: 20px;">
+                            <input type="text" placeholder="W"> <span style="color:red">*</span> 
+                            <input type="text" placeholder="L">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Flute</label>
+                        <div class="radio-group">
+                            <label class="radio-item">C <input type="radio" name="flute"></label>
+                            <label class="radio-item">B <input type="radio" name="flute"></label>
+                            <label class="radio-item">B/C <input type="radio" name="flute"></label>
+                            <label class="radio-item">E <input type="radio" name="flute"></label>
+                            <label class="radio-item">N <input type="radio" name="flute"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>ply</label>
+                        <div class="radio-group">
+                            <label class="radio-item">3 <input type="radio" name="ply"></label>
+                            <label class="radio-item">5 <input type="radio" name="ply"></label>
+                            <label class="radio-item">7 <input type="radio" name="ply"></label>
+                            <label class="radio-item">4 <input type="radio" name="ply"></label>
+                            <label class="radio-item">2 <input type="radio" name="ply"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row" style="display: block;">
+                    <div style="font-weight: 500; font-size: 16px; margin-bottom: 5px;">paper combination .</div>
+                    <div class="paper-combo-grid">
+                        <div class="paper-combo-row">
+                            <select><option>Select</option></select>
+                            <select><option>Select</option></select>
+                        </div>
+                        <div class="paper-combo-row">
+                            <select><option>Select</option></select>
+                            <select><option>Select</option></select>
+                        </div>
+                        <div class="paper-combo-row">
+                            <select><option>Select</option></select>
+                            <select><option>Select</option></select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-right">
+                    <button class="btn-save" style="color: red; padding: 5px 25px;" onclick="alert('Sales Order Saved!')">Save</button>
+                </div>
+
+                <!-- Sales Order History -->
+                <div class="history-section">
+                    <h3>Sales Order History .</h3>
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Date & time.</th>
+                                <th>Customer.</th>
+                                <th>Sales Order No</th>
+                                <th>Attachment</th>
+                                <th>Action.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <!-- Placeholders for other tabs -->
+            <div id="production-orders" class="tab-pane">
+                <h3>Production Orders (Work in Progress)</h3>
+            </div>
+            <div id="programme-sheets" class="tab-pane">
+                <h3>Programme Sheets (Work in Progress)</h3>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JavaScript for Interactions -->
+    <script>
+        // Tab Switching Logic
+        function switchMainTab(tabId, sidebarBtn) {
+            // Hide all tab panes
+            document.querySelectorAll('.tab-pane').forEach(pane => {
+                pane.classList.remove('active');
+            });
+            // Show target tab pane
+            document.getElementById(tabId).classList.add('active');
+
+            // Update Sidebar Active State
+            if (sidebarBtn) {
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                sidebarBtn.classList.add('active');
             }
+
+            // Update Inner Tab Active State
+            document.querySelectorAll('.inner-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            let innerTab = document.getElementById('tab-btn-' + tabId);
+            if(innerTab) innerTab.classList.add('active');
+        }
+
+        // Quotation Table Logic - Add Row
+        function addQuoteRow() {
+            const tbody = document.querySelector('#quoteTable tbody');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="text" class="desc-input"></td>
+                <td><input type="number" class="qty" oninput="calculateRow(this)"></td>
+                <td><input type="number" class="price" oninput="calculateRow(this)"></td>
+                <td><input type="text" class="total" readonly></td>
+            `;
+            tbody.appendChild(tr);
+        }
+
+        // Quotation Table Logic - Auto Calculate Total
+        function calculateRow(element) {
+            const row = element.closest('tr');
+            const qty = parseFloat(row.querySelector('.qty').value) || 0;
+            const price = parseFloat(row.querySelector('.price').value) || 0;
+            const total = qty * price;
+            
+            // Format to 2 decimal places if there's a value, else empty
+            row.querySelector('.total').value = total > 0 ? total.toFixed(2) : '';
         }
     </script>
 </body>
