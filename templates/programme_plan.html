@@ -520,8 +520,31 @@
     <input type="file" id="paperFile" onchange="processFile(event, 'papers')">
     <button onclick="document.getElementById('updateModal').style.display='none'">Close</button>
 </div>
+    <div id="addCustomerModal" style="display:none; padding:20px; background:white; border:1px solid #ccc;">
+    <h3>Add/Edit Customer</h3>
+    <input type="text" id="new_id" placeholder="Customer ID">
+    <input type="text" id="new_name" placeholder="Customer Name">
+    <input type="text" id="new_address" placeholder="Address">
+    <button onclick="saveManualCustomer()">Save</button>
+</div>
 
 <script>
+    function saveManualCustomer() {
+        const data = {
+            id: document.getElementById('new_id').value,
+            name: document.getElementById('new_name').value,
+            address: document.getElementById('new_address').value
+        };
+        fetch('/api/add_customer', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        }).then(res => res.json()).then(res => {
+            alert("Data saved successfully!");
+            location.reload(); // Page eka refresh karala aluth data pennanna
+        });
+    }
+
     function openUpdateModal() { document.getElementById('updateModal').style.display = 'block'; }
 
     function processFile(event, type) {
