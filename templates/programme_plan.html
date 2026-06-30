@@ -502,7 +502,56 @@
         </div>
     </div>
 
-    <script>
+    <div class="top-menu">
+    <div class="dropdown">
+        <button class="dropbtn">Home</button>
+        <div class="dropdown-content">
+            <a href="#" onclick="openUpdateModal()">Update</a>
+        </div>
+    </div>
+</div>
+
+<div id="updateModal" style="display:none; position:fixed; background:#fff; padding:20px; border:1px solid #ccc; z-index:1000;">
+    <h3>Upload Master Data (CSV)</h3>
+    <label>Customers CSV:</label>
+    <input type="file" id="custFile" onchange="processFile(event, 'customers')">
+    <br><br>
+    <label>Papers CSV:</label>
+    <input type="file" id="paperFile" onchange="processFile(event, 'papers')">
+    <button onclick="document.getElementById('updateModal').style.display='none'">Close</button>
+</div>
+
+<script>
+    function openUpdateModal() { document.getElementById('updateModal').style.display = 'block'; }
+
+    function processFile(event, type) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            const lines = e.target.result.split('\n');
+            let data = [];
+            for(let i=1; i<lines.length; i++) { // පළමු පේළිය (Header) මග හැරීමට
+                const cols = lines[i].split(',');
+                if(cols.length < 2) continue;
+                
+                if(type === 'customers') {
+                    data.push({ id: cols[0].trim(), name: cols[1].trim(), address: cols[2] ? cols[2].trim() : '' });
+                } else {
+                    data.push({ type: cols[0].trim(), name: cols[1].trim() });
+                }
+            }
+            
+            // Backend API එකට යැවීම
+            fetch('/api/upload_' + type, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            }).then(res => res.json()).then(data => alert("Database Updated!"));
+        };
+        reader.readAsText(file);
+    }
+
         let quotationsDB = [];
         let salesOrdersDB = [];
         let soCounter = 1;
