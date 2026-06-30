@@ -6,7 +6,7 @@ import os
 app = Flask(__name__)
 
 # Render Environment Variable එකෙන් Database URL එක ලබා ගැනීම
-DB_URL = os.environ.get("DATABASE_URL", "postgresql://postgres:AVNS_AJNctiNyP1ujHPV3mh8@localhost:28643/defaultdb")
+DB_URL = os.environ.get("DATABASE_URL", "pprobox123-viscorquality-0270.l.aivencloud.com")
 
 def get_db_connection():
     # SSL mode අත්‍යවශ්‍ය වේ
