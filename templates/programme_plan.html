@@ -5,263 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Packwell Lanka - Programme Plan</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
-
-        /* Top Menu Bar */
-        .top-menu {
-            background-color: #e0e0e0;
-            border-bottom: 1px solid #ccc;
-            display: flex;
-            padding: 5px 10px;
-            position: relative;
-            z-index: 1000;
-        }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; display: flex; flex-direction: column; height: 100vh; }
+        .top-menu { background-color: #e0e0e0; border-bottom: 1px solid #ccc; display: flex; padding: 5px 10px; position: relative; z-index: 1000; }
         .dropdown { position: relative; display: inline-block; }
-        .dropbtn {
-            background-color: transparent;
-            border: none;
-            padding: 8px 15px;
-            cursor: pointer;
-            font-size: 14px;
-        }
+        .dropbtn { background-color: transparent; border: none; padding: 8px 15px; cursor: pointer; font-size: 14px; font-weight: bold;}
         .dropbtn:hover { background-color: #ccc; }
-        .dropdown-content {
-            display: none; position: absolute; background-color: #fff;
-            min-width: 180px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            border: 1px solid #ccc; top: 100%; left: 0;
-        }
+        .dropdown-content { display: none; position: absolute; background-color: #fff; min-width: 180px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border: 1px solid #ccc; top: 100%; left: 0; }
         .dropdown-content a { color: black; padding: 10px 15px; text-decoration: none; display: block; font-size: 13px; }
         .dropdown-content a:hover { background-color: #f1f1f1; }
-        .sub-dropdown { position: relative; }
-        .sub-dropdown-content {
-            display: none; position: absolute; left: 100%; top: 0;
-            background-color: #fff; min-width: 150px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border: 1px solid #ccc;
-        }
-        .sub-dropdown:hover .sub-dropdown-content { display: block; }
         .dropdown.show .dropdown-content { display: block; }
-
-        /* Main Layout */
-        .main-container {
-            display: flex; flex: 1; overflow: hidden; position: relative; z-index: 1;
-        }
-
-        /* Left Sidebar */
-        .sidebar {
-            width: 220px; background-color: #eaeaea; border-right: 2px solid #ccc;
-            padding: 10px; display: flex; flex-direction: column;
-        }
-        .sidebar button {
-            width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #aaa;
-            background-color: #fff; cursor: pointer; text-align: left; font-size: 14px;
-        }
-        .sidebar button:hover, .sidebar button.active {
-            background-color: #d0d0d0; font-weight: bold;
-        }
-        .history-btn-container { margin-top: 20px; border-top: 2px solid #aaa; padding-top: 10px; }
         
-        .company-address {
-            margin-top: auto; padding-top: 20px; font-size: 12px;
-            color: #444; line-height: 1.5; border-top: 1px dashed #ccc;
-        }
-
-        /* Content Area */
-        .content-area {
-            flex: 1; padding: 20px; overflow-y: auto; background-color: #fff;
-        }
-        .tab-title { font-size: 20px; font-weight: bold; margin-bottom: 20px; color: #333; text-decoration: underline; }
-
-        /* Form Styling */
+        .main-container { display: flex; flex: 1; overflow: hidden; }
+        .sidebar { width: 220px; background-color: #eaeaea; border-right: 2px solid #ccc; padding: 10px; display: flex; flex-direction: column; }
+        .sidebar button { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #aaa; background-color: #fff; cursor: pointer; text-align: left; }
+        .sidebar button.active { background-color: #d0d0d0; font-weight: bold; }
+        .content-area { flex: 1; padding: 20px; overflow-y: auto; background-color: #fff; }
+        
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .form-group { display: flex; flex-direction: column; margin-bottom: 10px; }
-        .form-group label { font-size: 13px; font-weight: bold; margin-bottom: 5px; }
-        .form-group input, .form-group textarea, .form-group select {
-            padding: 8px; border: 1px solid #ccc; border-radius: 4px;
-        }
-        
-        /* Product Details specific styling */
-        .details-row { display: flex; align-items: center; margin-bottom: 15px; font-size: 14px; flex-wrap: wrap; }
-        .details-row label { font-weight: bold; width: 100px; }
-        .radio-group { margin-right: 20px; display: flex; align-items: center; }
-        .radio-group input { margin-right: 5px; }
-        .dimension-inputs input { width: 50px; text-align: center; margin: 0 5px; padding: 4px; }
-        
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 10px; }
+        .form-group input, .form-group textarea, .form-group select { padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: white;}
         table, th, td { border: 1px solid #aaa; }
-        th, td { padding: 8px; text-align: left; font-size: 14px; }
-        th { background-color: #f0f0f0; }
+        th, td { padding: 8px; text-align: left; }
+        th { background-color: #e0e0e0; }
         .table-input { width: 100%; box-sizing: border-box; border: none; background: transparent; }
         
-        .action-btn { padding: 8px 15px; background-color: #e0e0e0; border: 1px solid #aaa; cursor: pointer; border-radius: 4px; font-weight: bold; }
-        .action-btn:hover { background-color: #ccc; }
-        .btn-primary { background-color: #4CAF50; color: white; border: none; }
-        .btn-primary:hover { background-color: #45a049; }
-        
-        .section-box { border: 1px solid #333; padding: 20px; margin-bottom: 20px; border-radius: 5px; }
-        .summary-table { width: 300px; float: right; margin-top: 10px; }
-
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
-        .modal-content { background-color: #fff; margin: 2% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 800px; height: 90vh; overflow-y: auto; }
-        .close-btn { color: red; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
-        .print-document { display: none; }
+        .modal-content { background-color: #fff; margin: 5% auto; padding: 20px; border: 1px solid #888; width: 60%; max-width: 600px; border-radius: 5px;}
         
+        .action-btn { padding: 6px 12px; background-color: #4CAF50; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        .action-btn.secondary { background-color: #008CBA; }
+        
+        /* === Overlap Fix: Printing Logic === */
         @media print {
-            body * { visibility: hidden; }
-            .no-print { display: none !important; }
-            .print-document, .print-document * { visibility: visible; }
-            .print-document { display: block; position: absolute; left: 0; top: 0; width: 100%; padding: 20px; font-family: 'Times New Roman', serif; }
-            .modal { display: none !important; }
+            body *:not(.printing):not(.printing *) { display: none !important; }
+            .printing { display: block !important; position: absolute; left: 0; top: 0; width: 100%; padding: 20px; background: white; }
         }
-        .pdf-header { text-align: center; margin-bottom: 30px; }
-        .pdf-header h1 { font-size: 32px; letter-spacing: 2px; margin: 0; }
-        .pdf-top-details { display: flex; justify-content: space-between; margin-bottom: 20px; }
-        .pdf-box { border: 1px solid #000; padding: 15px; width: 45%; }
-        .pdf-table { width: 100%; margin-bottom: 20px; border-collapse: collapse; }
-        .pdf-table th, .pdf-table td { border: 1px solid #000; padding: 8px; }
-        .pdf-summary { width: 40%; float: right; border-collapse: collapse; }
-        .pdf-summary td { border: 1px solid #000; padding: 8px; }
-        .pdf-footer { margin-top: 100px; clear: both; }
-        .pdf-signatures { display: flex; justify-content: space-between; margin-top: 50px; }
-        .signature-line { border-top: 1px solid #000; width: 200px; text-align: center; padding-top: 5px; }
-
-        .excel-upload-box {
-            background-color: #fdfdfd; border: 1px dashed #007bff; padding: 10px;
-            margin-bottom: 15px; font-size: 13px; border-radius: 4px;
-        }
+        .print-document { display: none; }
     </style>
 </head>
 <body>
-
-    <datalist id="productList">
-        <option value="Standard Carton">
-        <option value="Die-cut Box">
-        <option value="Heavy Duty Board">
-        <option value="Printed Display Box">
-    </datalist>
 
     <div class="top-menu no-print">
         <div class="dropdown" id="fileMenu">
             <button class="dropbtn" onclick="toggleMenu(event, 'fileMenu')">File</button>
             <div class="dropdown-content">
-                <div class="sub-dropdown">
-                    <a href="#">New &raquo;</a>
-                    <div class="sub-dropdown-content">
-                        <a href="#" onclick="switchTab('Quotations')">Quotation</a>
-                        <a href="#" onclick="switchTab('Sales Orders')">Sales Order</a>
-                        <a href="#" onclick="switchTab('Production Orders')">Production Order</a>
-                        <a href="#" onclick="switchTab('Programme Sheets')">Programme Sheet</a>
-                    </div>
-                </div>
-                <a href="#" onclick="saveQuotation()">Save</a>
-                <a href="#">Save As</a>
-                <a href="#" onclick="printQuotation()">Print</a>
-                <a href="#">Options</a>
-                <a href="#">Share</a>
+                <a href="#" onclick="saveCurrentTab()">Save</a>
+                <a href="#" onclick="window.print()">Print Screen</a>
             </div>
         </div>
         <div class="dropdown" id="homeMenu">
             <button class="dropbtn" onclick="toggleMenu(event, 'homeMenu')">Home</button>
             <div class="dropdown-content">
-                <a href="#" onclick="document.body.style.zoom = '120%'">Zoom In</a>
-                <a href="#" onclick="document.body.style.zoom = '100%'">Zoom Out</a>
+                <a href="#" onclick="document.getElementById('addEditModal').style.display='block'">Add & Edit Master Data</a>
             </div>
         </div>
         <div class="dropdown" id="viewMenu">
             <button class="dropbtn" onclick="toggleMenu(event, 'viewMenu')">View</button>
             <div class="dropdown-content">
-                <a href="#" onclick="switchTab('Recent History'); document.getElementById('history-quotations').scrollIntoView();">Quotation History</a>
-                <a href="#" onclick="switchTab('Recent History'); document.getElementById('history-sales').scrollIntoView();">Sales Order History</a>
-            </div>
-        </div>
-        <div class="dropdown" id="helpMenu">
-            <button class="dropbtn" onclick="toggleMenu(event, 'helpMenu')">Help</button>
-            <div class="dropdown-content">
-                <a href="https://www.google.com/search?q=help" target="_blank">Help</a>
-                <a href="http://www.PackwellLanka.com" target="_blank">Contact Support</a>
+                <a href="#" onclick="switchTab('Q_History')">Quotation History</a>
+                <a href="#" onclick="switchTab('SO_History')">Sales Orders History</a>
             </div>
         </div>
     </div>
 
     <div class="main-container no-print">
         <div class="sidebar">
-            <div>
-                <button id="btn-Quotations" class="active" onclick="switchTab('Quotations')">Quotations</button>
-                <button id="btn-Sales Orders" onclick="switchTab('Sales Orders')">Sales Orders</button>
-                <button id="btn-Production Orders" onclick="document.getElementById('history-sales').scrollIntoView();">Production Orders</button>
-                <button id="btn-Programme Sheets" onclick="switchTab('Programme Sheets')">Programme Sheets</button>
-                
-                <div class="history-btn-container">
-                    <button id="btn-Recent History" onclick="switchTab('Recent History')">Recent History</button>
-                </div>
-            </div>
-            
-            <div class="company-address">
-                <strong>Packwell Lanka (Pvt) Ltd,</strong><br>
-                26, 2nd cross Lane,<br>
-                off Kandawela Road,<br>
-                Rathmalana
-            </div>
+            <button id="btn-Quotations" class="active" onclick="switchTab('Quotations')">Quotations</button>
+            <button id="btn-Sales" onclick="switchTab('Sales')">Sales Orders</button>
         </div>
 
         <div class="content-area">
-            <div id="dynamic-title" class="tab-title">Quotations</div>
-
-            <div class="section-box workspace" id="workspace-Quotations">
+            
+            <div id="workspace-Quotations" class="workspace">
+                <h2>Create Quotation</h2>
                 <div class="form-grid">
-                    <div>
-                        <div class="form-group">
-                            <label>Quotation No (Auto)</label>
-                            <input type="text" id="quotationNo" readonly style="background-color: #eee;">
-                        </div>
-                        <div class="form-group">
-                            <label>Date (Auto)</label>
-                            <input type="text" id="quoteDate" readonly style="background-color: #eee;">
-                        </div>
-                        <div class="form-group">
-                            <label>Valid Until</label>
-                            <input type="date" id="validUntil">
-                        </div>
-                        <div class="form-group">
-                            <label>Project Description</label>
-                            <textarea id="projDesc" rows="3"></textarea>
-                        </div>
+                    <div class="form-group">
+                        <label>Customer ID</label>
+                        <input type="text" id="q_custId" placeholder="Type Customer ID (e.g. C0001)" oninput="fetchCustomer('q')">
                     </div>
-                    <div>
-                        <div class="form-group">
-                            <label>Customer ID</label>
-                            <input type="text" id="customerId">
-                        </div>
-                        <div class="form-group">
-                            <label>Customer Name</label>
-                            <input type="text" id="customerName">
-                        </div>
-                        <div class="form-group">
-                            <label>Customer Address</label>
-                            <textarea id="customerAddress" rows="2"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Customer Phone</label>
-                            <input type="text" id="customerPhone">
-                        </div>
+                    <div class="form-group">
+                        <label>Customer Name</label>
+                        <input type="text" id="q_custName" readonly style="background:#eee;">
+                    </div>
+                    <div class="form-group">
+                        <label>Customer Address</label>
+                        <textarea id="q_custAddress" readonly style="background:#eee;" rows="2"></textarea>
                     </div>
                 </div>
 
                 <table id="itemTable">
-                    <thead>
-                        <tr>
-                            <th>Description</th>
-                            <th>Quantity</th>
-                            <th>Price (Rs)</th>
-                            <th>Total (Rs)</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>Description</th><th>Quantity</th><th>Price (Rs)</th><th>Total (Rs)</th></tr></thead>
                     <tbody id="itemBody">
                         <tr>
                             <td><input type="text" class="table-input desc"></td>
@@ -271,125 +105,19 @@
                         </tr>
                     </tbody>
                 </table>
-                <button class="action-btn" onclick="addRow()">+ Add More Items</button>
+                <button class="action-btn secondary" onclick="addRow()" style="margin-top:10px;">+ Add Item</button>
 
-                <table class="summary-table">
+                <table style="width: 300px; float: right; margin-top: 10px;">
                     <tr><td><strong>Subtotal</strong></td><td><input type="text" id="calcSubtotal" readonly class="table-input" value="0.00"></td></tr>
-                    <tr><td><strong>VAT (15%)</strong></td><td><input type="text" id="calcVat" readonly class="table-input" value="0.00"></td></tr>
-                    <tr><td><strong>Others</strong></td><td><input type="number" id="calcOthers" class="table-input" value="0" oninput="calculateTotal()"></td></tr>
+                    <tr><td><strong>VAT (18%)</strong></td><td><input type="text" id="calcVat" readonly class="table-input" value="0.00"></td></tr>
                     <tr><td><strong>Grand Total</strong></td><td><input type="text" id="calcGrand" readonly class="table-input" style="font-weight:bold;" value="0.00"></td></tr>
                 </table>
                 <div style="clear:both;"></div>
 
-                <div style="margin-top: 20px; text-align: right;">
-                    <button class="action-btn" onclick="saveQuotation()" style="margin-right:10px;">Save</button>
-                    <button class="action-btn btn-primary" onclick="printQuotation()">Print</button>
-                </div>
-            </div>
+                <button class="action-btn" onclick="saveQuotation()" style="margin-top:20px;">Save Quotation</button>
 
-            <div class="section-box workspace" id="workspace-Sales Orders" style="display:none;">
-                
-                <div class="form-grid" style="grid-template-columns: 1fr 1fr;">
-                    <div class="excel-upload-box">
-                        <strong>Upload Customer Details (CSV):</strong><br>
-                        <input type="file" id="uploadCustomersExcel" accept=".csv" onchange="loadCustomersExcel(event)" style="margin-top:5px;">
-                        <span id="custUploadStatus" style="color:green; display:block; margin-top:5px;">Not uploaded</span>
-                    </div>
-                    <div class="excel-upload-box">
-                        <strong>Upload Paper Type & Name (CSV):</strong><br>
-                        <input type="file" id="uploadPaperExcel" accept=".csv" onchange="loadPaperExcel(event)" style="margin-top:5px;">
-                        <span id="paperUploadStatus" style="color:green; display:block; margin-top:5px;">Not uploaded</span>
-                    </div>
-                </div>
-
-                <div class="form-grid" style="grid-template-columns: 1fr 1fr 1fr;">
-                    <div class="form-group">
-                        <label>Date & Time (Auto)</label>
-                        <input type="text" id="soDateTime" readonly style="background-color: #eee;">
-                    </div>
-                    <div class="form-group">
-                        <label>Sales Order No</label>
-                        <input type="text" id="soNumber" readonly style="background-color: #eee; font-weight:bold; color:red;">
-                    </div>
-                    <div class="form-group">
-                        <label>Product Name</label>
-                        <input type="text" id="soProductName" list="productList" placeholder="Start typing or select...">
-                    </div>
-                </div>
-
-                <div class="form-grid" style="border-top:1px solid #ccc; padding-top:15px; margin-top:10px;">
-                    <div>
-                        <div class="form-group">
-                            <label>Customer ID (Auto-fills on entry after CSV load)</label>
-                            <input type="text" id="soCustomerId" oninput="autofillCustomerSO()">
-                        </div>
-                        <div class="form-group">
-                            <label>Customer Name</label>
-                            <input type="text" id="soCustomerName" readonly style="background-color: #fafafa;">
-                        </div>
-                        <div class="form-group">
-                            <label>Customer Address</label>
-                            <textarea id="soCustomerAddress" rows="2" readonly style="background-color: #fafafa;"></textarea>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <div style="font-weight:bold; margin-bottom:10px; text-decoration:underline;">Product Details:</div>
-                        
-                        <div class="details-row">
-                            <label>Size of:</label>
-                            <div class="radio-group">
-                                <input type="radio" name="soSizeOf" value="Carton" checked> Carton
-                                <span class="dimension-inputs" style="margin-left:10px;">
-                                    [<input type="text" placeholder="L"> * <input type="text" placeholder="W"> * <input type="text" placeholder="H">]
-                                </span>
-                            </div>
-                            <div class="radio-group">
-                                <input type="radio" name="soSizeOf" value="Board"> Board
-                                <span class="dimension-inputs" style="margin-left:10px;">
-                                    [<input type="text" placeholder="W"> * <input type="text" placeholder="L">]
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="details-row">
-                            <label>Flute:</label>
-                            <div class="radio-group"><input type="radio" name="soFlute" value="C"> C</div>
-                            <div class="radio-group"><input type="radio" name="soFlute" value="B"> B</div>
-                            <div class="radio-group"><input type="radio" name="soFlute" value="B/C"> B/C</div>
-                            <div class="radio-group"><input type="radio" name="soFlute" value="E"> E</div>
-                            <div class="radio-group"><input type="radio" name="soFlute" value="N"> N</div>
-                        </div>
-
-                        <div class="details-row">
-                            <label>Ply:</label>
-                            <div class="radio-group"><input type="radio" name="soPly" value="2"> 2</div>
-                            <div class="radio-group"><input type="radio" name="soPly" value="3" checked> 3</div>
-                            <div class="radio-group"><input type="radio" name="soPly" value="4"> 4</div>
-                            <div class="radio-group"><input type="radio" name="soPly" value="5"> 5</div>
-                            <div class="radio-group"><input type="radio" name="soPly" value="7"> 7</div>
-                        </div>
-
-                        <div class="details-row" style="align-items: flex-start;">
-                            <label>Paper <br>Combination:</label>
-                            <div id="paperRowsContainer"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="margin-top: 20px; text-align: right; border-top:1px solid #ccc; padding-top:15px;">
-                    <button class="action-btn" onclick="saveSalesOrder()" style="margin-right:10px;">Save & Print</button>
-                    <button class="action-btn btn-primary" onclick="printSalesOrder()">Print</button>
-                </div>
-            </div>
-
-            <div class="section-box workspace" id="workspace-Recent History" style="display:none;">
-                <h3 style="margin-top:0;">Activity Log (Recent History)</h3>
-                <div style="max-height: 150px; overflow-y:auto; background:#f9f9f9; padding:10px; border:1px solid #ddd; margin-bottom:20px; font-size:13px;" id="activityLogBox">
-                </div>
-
-                <h3 id="history-quotations" style="border-top:2px solid #ccc; padding-top:20px;">Quotation History Database</h3>
-                <table id="historyTable">
+                <h3 style="margin-top:40px; border-top: 2px solid #ccc; padding-top: 20px;">Quotation History</h3>
+                <table id="q_history_table">
                     <thead>
                         <tr>
                             <th>Date & Time</th>
@@ -399,396 +127,254 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody id="historyBody"></tbody>
-                </table>
-
-                <h3 id="history-sales" style="border-top:2px solid #ccc; padding-top:20px; margin-top:30px;">Sales Order History Database</h3>
-                <table id="soHistoryTable">
-                    <thead>
-                        <tr>
-                            <th>Date & Time</th>
-                            <th>Customer Name</th>
-                            <th>Sales Order No</th>
-                            <th>Attachment</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="soHistoryBody"></tbody>
+                    <tbody></tbody>
                 </table>
             </div>
 
+            <div id="workspace-Sales" class="workspace" style="display:none;">
+                <h2>Create Sales Order</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Customer ID</label>
+                        <input type="text" id="so_custId" oninput="fetchCustomer('so')">
+                    </div>
+                    <div class="form-group">
+                        <label>Customer Name</label>
+                        <input type="text" id="so_custName" readonly style="background:#eee;">
+                    </div>
+                </div>
+
+                <div class="form-grid" style="margin-top:20px;">
+                    <div class="form-group">
+                        <label>Paper Type</label>
+                        <select id="so_paperType" onchange="filterPaperNames()">
+                            <option value="">Select Paper Type</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Paper Name</label>
+                        <select id="so_paperName">
+                            <option value="">Select Paper Name</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="action-btn" onclick="saveSalesOrder()" style="margin-top:20px;">Save Sales Order</button>
+
+                <h3 style="margin-top:40px; border-top: 2px solid #ccc; padding-top: 20px;">Sales Order History</h3>
+                <table id="so_history_table">
+                    <thead><tr><th>Date & Time</th><th>Customer</th><th>SO_No</th><th>Attachment</th><th>Action</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
         </div>
     </div>
 
-    <div id="printLayout" class="print-document">
-        <div class="pdf-header"><h1>QUOTATION</h1></div>
-        <div class="pdf-top-details">
-            <div class="pdf-box" style="border:none; padding-left:0;">
-                <h3 style="margin-top:0;" id="p-customerName">[Customer Name]</h3>
-                <div id="p-customerAddress">[Address]</div>
-                <div id="p-customerPhone">[Phone]</div>
-            </div>
-            <div class="pdf-box">
-                <div><strong>Quotation No:</strong> <span id="p-qno"></span></div>
-                <div><strong>Date:</strong> <span id="p-date"></span></div>
-                <div><strong>Valid Until:</strong> <span id="p-valid"></span></div>
-                <div><strong>Customer ID:</strong> <span id="p-cid"></span></div>
-            </div>
-        </div>
-        <div style="margin-bottom: 20px;">
-            <strong>PROJECT DESCRIPTION:</strong>
-            <p id="p-desc" style="margin-top:5px;"></p>
-        </div>
-        <table class="pdf-table" id="p-itemTable">
-            <thead>
-                <tr style="background-color: #eee;">
-                    <th>Description</th><th>Quantity</th><th>Price</th><th>Total</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-        <table class="pdf-summary">
-            <tr><td>Subtotal</td><td id="p-subtotal"></td></tr>
-            <tr><td>VAT (15%)</td><td id="p-vat"></td></tr>
-            <tr><td>Others</td><td id="p-others"></td></tr>
-            <tr style="font-weight:bold; background-color:#eee;"><td>Total</td><td id="p-grand"></td></tr>
-        </table>
-        <div class="pdf-footer">
-            <strong>TERMS & CONDITIONS</strong>
-            <p>Above information is not an invoice and only an estimate of goods/services. Payment will be due prior to provision or delivery of goods/services.</p>
-            <br>
-            <strong>PLEASE CONFIRM YOUR ACCEPTANCE OF THIS QUOTE</strong>
-            <div class="pdf-signatures">
-                <div class="signature-line">Signature over printed name</div>
-                <div class="signature-line">Date signed</div>
-            </div>
-        </div>
-    </div>
-
-    <div id="printLayoutSO" class="print-document">
-        <div class="pdf-header"><h1>SALES ORDER</h1></div>
-        <div class="pdf-top-details">
-            <div class="pdf-box" style="border:none; padding-left:0;">
-                <h3 style="margin-top:0;" id="p-so-customerName">[Customer Name]</h3>
-                <div id="p-so-customerAddress">[Address]</div>
-            </div>
-            <div class="pdf-box">
-                <div><strong>Sales Order No:</strong> <span id="p-so-no"></span></div>
-                <div><strong>Date & Time:</strong> <span id="p-so-date"></span></div>
-            </div>
-        </div>
-        <div style="margin-bottom: 20px;">
-            <strong>PRODUCT NAME:</strong> <span id="p-so-prodName"></span>
-        </div>
-        <div style="border: 1px solid #000; padding:15px; margin-bottom:20px;">
-            <p><strong>Size Of:</strong> <span id="p-so-sizeof"></span></p>
-            <p><strong>Flute:</strong> <span id="p-so-flute"></span></p>
-            <p><strong>Ply:</strong> <span id="p-so-ply"></span></p>
-            <div id="p-so-paper-comb"><strong>Paper Combinations:</strong><br></div>
-        </div>
-        <div class="pdf-signatures" style="margin-top:50px;">
-            <div class="signature-line">Prepared By</div>
-            <div class="signature-line">Authorized Signatory</div>
-        </div>
-    </div>
-
-    <div id="viewModal" class="modal no-print">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div id="modalPrintArea"></div>
-            <div style="text-align: right; margin-top:20px;">
-                <button class="action-btn btn-primary" onclick="window.print()">Print This Attachment</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="top-menu">
-    <div class="dropdown">
-        <button class="dropbtn">Home</button>
-        <div class="dropdown-content">
-            <a href="#" onclick="openUpdateModal()">Update</a>
-        </div>
-    </div>
-</div>
-
-<div id="updateModal" style="display:none; position:fixed; background:#fff; padding:20px; border:1px solid #ccc; z-index:1000;">
-    <h3>Upload Master Data (CSV)</h3>
-    <label>Customers CSV:</label>
-    <input type="file" id="custFile" onchange="processFile(event, 'customers')">
-    <br><br>
-    <label>Papers CSV:</label>
-    <input type="file" id="paperFile" onchange="processFile(event, 'papers')">
-    <button onclick="document.getElementById('updateModal').style.display='none'">Close</button>
-</div>
-    <div id="addCustomerModal" style="display:none; padding:20px; background:white; border:1px solid #ccc;">
-    <h3>Add/Edit Customer</h3>
-    <input type="text" id="new_id" placeholder="Customer ID">
-    <input type="text" id="new_name" placeholder="Customer Name">
-    <input type="text" id="new_address" placeholder="Address">
-    <button onclick="saveManualCustomer()">Save</button>
-</div>
-
-<script>
-    function saveManualCustomer() {
-        const data = {
-            id: document.getElementById('new_id').value,
-            name: document.getElementById('new_name').value,
-            address: document.getElementById('new_address').value
-        };
-        fetch('/api/add_customer', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data)
-        }).then(res => res.json()).then(res => {
-            alert("Data saved successfully!");
-            location.reload(); // Page eka refresh karala aluth data pennanna
-        });
-    }
-
-    function openUpdateModal() { document.getElementById('updateModal').style.display = 'block'; }
-
-    function processFile(event, type) {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        
-        reader.onload = function(e) {
-            const lines = e.target.result.split('\n');
-            let data = [];
-            for(let i=1; i<lines.length; i++) { // පළමු පේළිය (Header) මග හැරීමට
-                const cols = lines[i].split(',');
-                if(cols.length < 2) continue;
-                
-                if(type === 'customers') {
-                    data.push({ id: cols[0].trim(), name: cols[1].trim(), address: cols[2] ? cols[2].trim() : '' });
-                } else {
-                    data.push({ type: cols[0].trim(), name: cols[1].trim() });
-                }
-            }
+    <div id="addEditModal" class="modal no-print">
+        <div class="modal-content" style="max-height: 80vh; overflow-y: auto;">
+            <h2 style="margin-top:0;">Add & Edit Master Data</h2>
+            <p style="font-size:13px; color:#555;">මෙතැනින් Customer විස්තර සහ Paper වර්ග තනි තනිව Add/Edit කළ හැක. එසේම Excel/CSV file එකක් හරහා එකවර දත්ත Upload කිරීමටද හැක.</p>
             
-            // Backend API එකට යැවීම
-            fetch('/api/upload_' + type, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(data)
-            }).then(res => res.json()).then(data => alert("Database Updated!"));
-        };
-        reader.readAsText(file);
-    }
+            <div style="border:1px solid #ccc; padding:15px; margin-bottom:15px; border-radius:5px;">
+                <h3 style="margin-top:0; font-size: 16px;">Manual Data Entry</h3>
+                <div style="background:#f9f9f9; padding:10px; margin-bottom:10px;">
+                    <strong>Customer Data:</strong>
+                    <div class="form-grid">
+                        <div class="form-group"><input type="text" id="md_c_id" placeholder="Customer ID (Ex: C0001)"></div>
+                        <div class="form-group"><input type="text" id="md_c_name" placeholder="Customer Name"></div>
+                    </div>
+                    <div class="form-group"><input type="text" id="md_c_addr" placeholder="Address"></div>
+                    <button class="action-btn secondary" onclick="addEditCustomer()">Save Customer</button>
+                </div>
 
-        let quotationsDB = [];
-        let salesOrdersDB = [];
-        let soCounter = 1;
+                <div style="background:#f9f9f9; padding:10px;">
+                    <strong>Paper Data:</strong>
+                    <div class="form-grid">
+                        <div class="form-group"><input type="text" id="md_p_type" placeholder="Paper Type (Ex: Kraft)"></div>
+                        <div class="form-group"><input type="text" id="md_p_name" placeholder="Paper Name (Ex: 125 KL)"></div>
+                    </div>
+                    <button class="action-btn secondary" onclick="addEditPaper()">Save Paper</button>
+                </div>
+            </div>
 
-        // Dynamic Databases initialized from uploaded CSV files
-        let uploadedCustomers = {};
-        let uploadedPaperTypes = []; // Stores objects with { type: "...", name: "..." }
+            <div style="border:1px solid #ccc; padding:15px; margin-bottom:15px; border-radius:5px;">
+                <h3 style="margin-top:0; font-size: 16px;">Bulk CSV Upload (Optional)</h3>
+                <div class="form-group">
+                    <label>Upload Customers CSV:</label>
+                    <input type="file" id="uploadCustomers" accept=".csv" onchange="uploadCSVToDB(event, 'customers')">
+                </div>
+                <div class="form-group">
+                    <label>Upload Papers CSV:</label>
+                    <input type="file" id="uploadPapers" accept=".csv" onchange="uploadCSVToDB(event, 'papers')">
+                </div>
+            </div>
+
+            <button class="action-btn" style="background-color:red;" onclick="document.getElementById('addEditModal').style.display='none'">Close Window</button>
+        </div>
+    </div>
+
+    <div id="printFormatQ" class="print-document">
+        <h1 style="text-align: center;">QUOTATION</h1>
+        <hr>
+        <p><strong>Quotation No:</strong> <span id="pq_no"></span></p>
+        <p><strong>Customer Name:</strong> <span id="pq_custName"></span></p>
+        <p><strong>Customer Address:</strong> <span id="pq_custAddress"></span></p>
+        <p><strong>Date:</strong> <span id="pq_date"></span></p>
+        
+        <table style="width:100%; border-collapse: collapse; margin-top: 20px;">
+            <thead><tr><th style="border:1px solid #000; padding:5px;">Subtotal (Rs)</th><th style="border:1px solid #000; padding:5px;">VAT (18%)</th><th style="border:1px solid #000; padding:5px;">Grand Total (Rs)</th></tr></thead>
+            <tbody>
+                <tr>
+                    <td style="border:1px solid #000; padding:5px;" id="pq_sub"></td>
+                    <td style="border:1px solid #000; padding:5px;" id="pq_vat"></td>
+                    <td style="border:1px solid #000; padding:5px; font-weight:bold;" id="pq_grand"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="printFormatSO" class="print-document">
+        <h1 style="text-align: center;">SALES ORDER</h1>
+        <hr>
+        <p><strong>Sales Order No:</strong> <span id="pso_no"></span></p>
+        <p><strong>Customer Name:</strong> <span id="pso_custName"></span></p>
+        <p><strong>Paper Type:</strong> <span id="pso_paperType"></span></p>
+        <p><strong>Paper Name:</strong> <span id="pso_paperName"></span></p>
+        <p><strong>Date:</strong> <span id="pso_date"></span></p>
+    </div>
+
+    <script>
+        let currentTab = 'Quotations';
+        let sysCustomers = [];
+        let sysPapers = [];
 
         window.onload = function() {
-            generateAutoDetails();
-            generatePaperRows(5); // EXACTLY 5 rows for paper combinations
-            logAction("System initialized.");
+            loadSysData();
+            loadTables();
         };
 
-        // --- CSV IMPORT & PARSING ---
-        function loadCustomersExcel(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                const text = e.target.result;
-                parseCSVToCustomers(text);
-                document.getElementById('custUploadStatus').innerText = "Loaded: " + file.name;
-                logAction("Customer Database imported: " + file.name);
-            };
-            reader.readAsText(file);
+        function switchTab(tab) {
+            document.querySelectorAll('.workspace').forEach(el => el.style.display = 'none');
+            document.getElementById('workspace-' + tab).style.display = 'block';
+            document.querySelectorAll('.sidebar button').forEach(el => el.classList.remove('active'));
+            document.getElementById('btn-' + tab).classList.add('active');
+            currentTab = tab;
         }
 
-        function parseCSVToCustomers(csvText) {
-            // Split by new line, standard CSV parsing
-            const lines = csvText.split(/\r\n|\n/);
-            uploadedCustomers = {}; // Reset list
-            
-            // i=1 to skip the header
-            for (let i = 1; i < lines.length; i++) {
-                const line = lines[i].trim();
-                if(!line) continue;
-                
-                let row = [];
-                let inQuotes = false;
-                let entry = '';
-                for(let char of line) {
-                    if (char === '"') { inQuotes = !inQuotes; }
-                    else if (char === ',' && !inQuotes) {
-                        row.push(entry.replace(/^"|"$/g, '').trim());
-                        entry = '';
-                    } else { entry += char; }
-                }
-                row.push(entry.replace(/^"|"$/g, '').trim());
-
-                if (row.length >= 3) {
-                    let custId = row[0];
-                    let custName = row[1];
-                    let custAddr = row[2];
-                    if (custId) {
-                        uploadedCustomers[custId] = { name: custName, address: custAddr };
-                    }
-                }
-            }
+        function toggleMenu(event, id) {
+            document.querySelectorAll('.dropdown-content').forEach(el => el.parentElement.classList.remove('show'));
+            document.getElementById(id).classList.toggle('show');
         }
 
-        function loadPaperExcel(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                const text = e.target.result;
-                parseCSVToPaperTypes(text);
-                document.getElementById('paperUploadStatus').innerText = "Loaded: " + file.name;
-                logAction("Paper Database imported: " + file.name);
-            };
-            reader.readAsText(file);
-        }
-
-        function parseCSVToPaperTypes(csvText) {
-            const lines = csvText.split(/\r\n|\n/);
-            uploadedPaperTypes = []; // Reset array
-            
-            for (let i = 1; i < lines.length; i++) {
-                const line = lines[i].trim();
-                if(!line) continue;
-                
-                const parts = line.split(',');
-                if (parts.length >= 2) {
-                    uploadedPaperTypes.push({
-                        type: parts[0].trim(),
-                        name: parts[1].trim()
-                    });
-                }
-            }
-            // After loading papers, reset and re-populate the 5 rows' select dropdowns
-            generatePaperRows(5);
-        }
-
-        // Generates 5 rows for Paper Combinations
-        function generatePaperRows(count) {
-            const container = document.getElementById('paperRowsContainer');
-            container.innerHTML = '';
-            
-            for (let i = 0; i < count; i++) {
-                let rowDiv = document.createElement('div');
-                rowDiv.className = 'paper-row';
-                rowDiv.style.display = 'flex';
-                rowDiv.style.marginBottom = '5px';
-                rowDiv.style.alignItems = 'center';
-                
-                // Added a small label for row number
-                rowDiv.innerHTML = `
-                    <span style="font-size:12px; font-weight:bold; width:35px;">R ${i+1}:</span>
-                    <input type="text" placeholder="GSM" class="table-input paper-gsm-input" style="border:1px solid #ccc; padding:4px; width:60px; margin-right:5px;">
-                    <input type="text" placeholder="Type (e.g. Test liner)" class="table-input paper-type-input" style="border:1px solid #ccc; padding:4px; width:130px; margin-right:5px;" oninput="filterPaperNames(this)">
-                    <select class="table-input paper-name-select" style="border:1px solid #ccc; padding:4px; width:170px;">
-                        <option value="">Select Paper Name...</option>
-                    </select>
-                `;
-                container.appendChild(rowDiv);
-            }
-        }
-
-        // Filters the paper name dropdown according to Paper Type Input
-        function filterPaperNames(typeInputObj) {
-            const parentRow = typeInputObj.parentElement;
-            const selectEl = parentRow.querySelector('.paper-name-select');
-            const filterVal = typeInputObj.value.trim().toLowerCase();
-
-            // Clear current dropdown options
-            selectEl.innerHTML = '<option value="">Select Paper Name...</option>';
-            
-            if (filterVal === "") return;
-
-            // Find all matching options
-            uploadedPaperTypes.forEach(pt => {
-                // e.g. if type contains filterVal like "Test liner" or "Medium"
-                if(pt.type.toLowerCase().includes(filterVal)) {
-                    let opt = document.createElement('option');
-                    opt.value = pt.name;
-                    opt.text = pt.name;
-                    selectEl.appendChild(opt);
-                }
+        // --- Master Data System (Built-in) ---
+        function loadSysData() {
+            fetch('/api/customers').then(res => res.json()).then(data => sysCustomers = data);
+            fetch('/api/papers').then(res => res.json()).then(data => {
+                sysPapers = data;
+                let types = [...new Set(data.map(p => p.type))];
+                let ptSelect = document.getElementById('so_paperType');
+                ptSelect.innerHTML = '<option value="">Select Paper Type</option>';
+                types.forEach(t => ptSelect.innerHTML += `<option value="${t}">${t}</option>`);
             });
         }
 
-        // --- MENU & TABS LOGIC ---
-        window.onclick = function(event) {
-            if (!event.target.matches('.dropbtn')) {
-                let dropdowns = document.getElementsByClassName("dropdown");
-                for (let i = 0; i < dropdowns.length; i++) { dropdowns[i].classList.remove('show'); }
+        function addEditCustomer() {
+            let data = {
+                id: document.getElementById('md_c_id').value.trim(),
+                name: document.getElementById('md_c_name').value.trim(),
+                address: document.getElementById('md_c_addr').value.trim()
+            };
+            if(!data.id || !data.name) return alert("ID and Name are required!");
+            fetch('/api/add_customer', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            }).then(res => res.json()).then(() => {
+                alert("Customer Details Saved!");
+                loadSysData();
+                document.getElementById('md_c_id').value = ''; document.getElementById('md_c_name').value = ''; document.getElementById('md_c_addr').value = '';
+            });
+        }
+
+        function addEditPaper() {
+            let data = {
+                type: document.getElementById('md_p_type').value.trim(),
+                name: document.getElementById('md_p_name').value.trim()
+            };
+            if(!data.type || !data.name) return alert("Type and Name are required!");
+            fetch('/api/add_paper', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            }).then(res => res.json()).then(() => {
+                alert("Paper Details Saved!");
+                loadSysData();
+                document.getElementById('md_p_type').value = ''; document.getElementById('md_p_name').value = '';
+            });
+        }
+
+        function uploadCSVToDB(event, type) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const rows = e.target.result.split('\n');
+                let data = [];
+                for(let i=1; i<rows.length; i++) {
+                    let cols = rows[i].split(',');
+                    if(cols.length < 2) continue;
+                    if(type === 'customers') data.push({ id: cols[0].trim(), name: cols[1].trim(), address: cols[2] ? cols[2].trim().replace(/^"|"$/g, '') : '' });
+                    if(type === 'papers') data.push({ type: cols[0].trim(), name: cols[1].trim() });
+                }
+                
+                fetch(`/api/upload_${type}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                }).then(res => res.json()).then(res => {
+                    alert('Data Uploaded Successfully!');
+                    loadSysData();
+                });
+            };
+            reader.readAsText(file);
+        }
+
+        // --- Auto Fill / Dropdowns ---
+        function fetchCustomer(prefix) {
+            let id = document.getElementById(prefix + '_custId').value.trim();
+            let cust = sysCustomers.find(c => c.id === id);
+            if(cust) {
+                document.getElementById(prefix + '_custName').value = cust.name;
+                if(prefix === 'q') document.getElementById('q_custAddress').value = cust.address;
+            } else {
+                document.getElementById(prefix + '_custName').value = '';
+                if(prefix === 'q') document.getElementById('q_custAddress').value = '';
             }
         }
-        
-        function toggleMenu(event, menuId) {
-            event.stopPropagation();
-            let dropdowns = document.getElementsByClassName("dropdown");
-            for (let i = 0; i < dropdowns.length; i++) {
-                if(dropdowns[i].id !== menuId) { dropdowns[i].classList.remove('show'); }
-            }
-            document.getElementById(menuId).classList.toggle("show");
+
+        function filterPaperNames() {
+            let type = document.getElementById('so_paperType').value;
+            let pnSelect = document.getElementById('so_paperName');
+            pnSelect.innerHTML = '<option value="">Select Paper Name</option>';
+            sysPapers.filter(p => p.type === type).forEach(p => {
+                pnSelect.innerHTML += `<option value="${p.name}">${p.name}</option>`;
+            });
         }
 
-        function switchTab(tabName) {
-            document.getElementById('dynamic-title').innerText = tabName;
-            
-            const buttons = document.querySelectorAll('.sidebar button');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            let activeBtn = document.getElementById('btn-' + tabName);
-            if(activeBtn) activeBtn.classList.add('active');
-
-            const workspaces = document.querySelectorAll('.workspace');
-            workspaces.forEach(ws => ws.style.display = 'none');
-
-            const targetWorkspace = document.getElementById('workspace-' + tabName);
-            if(targetWorkspace) targetWorkspace.style.display = 'block';
-
-            if(tabName === 'Quotations') generateAutoDetails();
-            if(tabName === 'Sales Orders') generateSODetails();
-        }
-
-        function logAction(message) {
-            const time = new Date().toLocaleString();
-            const logBox = document.getElementById('activityLogBox');
-            const logEntry = document.createElement('div');
-            logEntry.style.borderBottom = "1px dotted #ccc";
-            logEntry.style.padding = "4px 0";
-            logEntry.innerText = `[${time}] - ${message}`;
-            logBox.prepend(logEntry);
-        }
-
-        // --- QUOTATION ---
-        function generateAutoDetails() {
-            const now = new Date();
-            const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-            const randomID = String(Math.floor(Math.random() * 9999) + 1).padStart(4, '0');
-            document.getElementById('quotationNo').value = `PKQ ${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}@${randomID}`;
-            document.getElementById('quoteDate').value = dateStr;
-        }
-
+        // --- VAT & Calculations (18%) ---
         function addRow() {
             const tbody = document.getElementById('itemBody');
             const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td><input type="text" class="table-input desc"></td>
+            newRow.innerHTML = `<td><input type="text" class="table-input desc"></td>
                 <td><input type="number" class="table-input qty" oninput="calculateTotal()"></td>
                 <td><input type="number" class="table-input price" oninput="calculateTotal()"></td>
-                <td><input type="text" class="table-input total-col" readonly></td>
-            `;
+                <td><input type="text" class="table-input total-col" readonly></td>`;
             tbody.appendChild(newRow);
         }
 
         function calculateTotal() {
             let subtotal = 0;
-            const rows = document.querySelectorAll('#itemBody tr');
-            rows.forEach(row => {
+            document.querySelectorAll('#itemBody tr').forEach(row => {
                 const qty = parseFloat(row.querySelector('.qty').value) || 0;
                 const price = parseFloat(row.querySelector('.price').value) || 0;
                 const total = qty * price;
@@ -796,220 +382,101 @@
                 subtotal += total;
             });
             document.getElementById('calcSubtotal').value = subtotal.toFixed(2);
-            const vat = subtotal * 0.15;
+            // VAT 18% calculation
+            const vat = subtotal * 0.18;
             document.getElementById('calcVat').value = vat.toFixed(2);
-            const others = parseFloat(document.getElementById('calcOthers').value) || 0;
-            const grand = subtotal + vat + others;
-            document.getElementById('calcGrand').value = grand.toFixed(2);
+            document.getElementById('calcGrand').value = (subtotal + vat).toFixed(2);
         }
 
-        function populatePrintLayout() {
-            document.getElementById('p-qno').innerText = document.getElementById('quotationNo').value;
-            document.getElementById('p-date').innerText = document.getElementById('quoteDate').value;
-            document.getElementById('p-valid').innerText = document.getElementById('validUntil').value || '-';
-            document.getElementById('p-cid').innerText = document.getElementById('customerId').value || '-';
-            document.getElementById('p-customerName').innerText = document.getElementById('customerName').value || 'Unknown Customer';
-            document.getElementById('p-customerAddress').innerHTML = document.getElementById('customerAddress').value.replace(/\n/g, '<br>') || '-';
-            document.getElementById('p-desc').innerText = document.getElementById('projDesc').value || '-';
-
-            const pTbody = document.querySelector('#p-itemTable tbody');
-            pTbody.innerHTML = ''; 
-            const rows = document.querySelectorAll('#itemBody tr');
-            rows.forEach(row => {
-                const desc = row.querySelector('.desc').value;
-                const qty = row.querySelector('.qty').value;
-                const price = row.querySelector('.price').value;
-                const total = row.querySelector('.total-col').value;
-                if(desc || qty || price) {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `<td>${desc}</td><td>${qty}</td><td>Rs ${price}</td><td>Rs ${total}</td>`;
-                    pTbody.appendChild(tr);
-                }
-            });
-
-            document.getElementById('p-subtotal').innerText = 'Rs ' + document.getElementById('calcSubtotal').value;
-            document.getElementById('p-vat').innerText = 'Rs ' + document.getElementById('calcVat').value;
-            document.getElementById('p-others').innerText = 'Rs ' + document.getElementById('calcOthers').value;
-            document.getElementById('p-grand').innerText = 'Rs ' + document.getElementById('calcGrand').value;
-        }
-
+        // --- Data Management (Save & Tables) ---
         function saveQuotation() {
-            const qNo = document.getElementById('quotationNo').value;
-            const customer = document.getElementById('customerName').value || 'Unknown Customer';
-            const dateTime = new Date().toLocaleString();
-            const rawDate = new Date().getTime();
-
-            populatePrintLayout();
-            const quoteSnapshot = document.getElementById('printLayout').innerHTML;
-            quotationsDB.push(quoteSnapshot);
-            const quoteIndex = quotationsDB.length - 1;
-
-            const historyBody = document.getElementById('historyBody');
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td>${dateTime}</td>
-                <td>${customer}</td>
-                <td>${qNo}</td>
-                <td><button class="action-btn" onclick="viewAttachment('Q', ${quoteIndex})">View Attached</button></td>
-                <td><button class="action-btn btn-primary" onclick="approveAction(this, ${rawDate}, 'Quotation')">Approved</button></td>
-            `;
-            historyBody.appendChild(newRow);
-
-            logAction(`Quotation Saved: ${qNo} for ${customer}`);
-            alert("Quotation Saved Successfully to History!");
+            let custName = document.getElementById('q_custName').value;
+            if(!custName) return alert("Select a valid Customer ID");
             
-            document.getElementById('validUntil').value = '';
-            document.getElementById('customerId').value = '';
-            document.getElementById('customerName').value = '';
-            document.getElementById('customerAddress').value = '';
-            generateAutoDetails();
-        }
-
-        function printQuotation() {
-            populatePrintLayout();
-            document.getElementById('printLayout').style.display = 'block';
-            window.print();
-            document.getElementById('printLayout').style.display = 'none';
-            logAction(`Quotation Printed.`);
-        }
-
-        // --- SALES ORDERS ---
-        function generateSODetails() {
-            document.getElementById('soDateTime').value = new Date().toLocaleString();
-            document.getElementById('soNumber').value = String(soCounter).padStart(6, '0');
-        }
-
-        // Auto-fills customer Name and Address based on loaded CSV data
-        function autofillCustomerSO() {
-            const cid = document.getElementById('soCustomerId').value.trim();
-            if(uploadedCustomers[cid]) {
-                document.getElementById('soCustomerName').value = uploadedCustomers[cid].name;
-                document.getElementById('soCustomerAddress').value = uploadedCustomers[cid].address;
-                logAction(`Customer ${cid} auto-filled from CSV.`);
-            } else {
-                document.getElementById('soCustomerName').value = '';
-                document.getElementById('soCustomerAddress').value = '';
-            }
-        }
-
-        function populatePrintLayoutSO() {
-            document.getElementById('p-so-no').innerText = document.getElementById('soNumber').value;
-            document.getElementById('p-so-date').innerText = document.getElementById('soDateTime').value;
-            document.getElementById('p-so-customerName').innerText = document.getElementById('soCustomerName').value || 'N/A';
-            document.getElementById('p-so-customerAddress').innerText = document.getElementById('soCustomerAddress').value || 'N/A';
-            document.getElementById('p-so-prodName').innerText = document.getElementById('soProductName').value || 'N/A';
-
-            let sizeVal = document.querySelector('input[name="soSizeOf"]:checked').value;
-            document.getElementById('p-so-sizeof').innerText = sizeVal;
-            
-            let fluteEl = document.querySelector('input[name="soFlute"]:checked');
-            document.getElementById('p-so-flute').innerText = fluteEl ? fluteEl.value : '-';
-            
-            let plyEl = document.querySelector('input[name="soPly"]:checked');
-            document.getElementById('p-so-ply').innerText = plyEl ? plyEl.value : '-';
-
-            const combContainer = document.getElementById('p-so-paper-comb');
-            combContainer.innerHTML = '<strong>Paper Combinations:</strong><br>';
-            const rows = document.querySelectorAll('.paper-row');
-            rows.forEach((row, idx) => {
-                const gsm = row.querySelector('.paper-gsm-input').value;
-                const type = row.querySelector('.paper-type-input').value;
-                const name = row.querySelector('.paper-name-select').value;
-                if(gsm || name) {
-                    combContainer.innerHTML += `Row ${idx+1}: GSM: ${gsm || '-'}, Type: ${type || '-'}, Name: ${name || '-'}<br>`;
-                }
-            });
+            let data = {
+                q_no: "Q" + Math.floor(Math.random()*10000),
+                customer: custName,
+                date: new Date().toLocaleString(),
+                html_data: JSON.stringify({ sub: document.getElementById('calcSubtotal').value, vat: document.getElementById('calcVat').value, grand: document.getElementById('calcGrand').value })
+            };
+            fetch('/api/quotations', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) })
+            .then(() => { alert("Quotation saved!"); loadTables(); });
         }
 
         function saveSalesOrder() {
-            const soNo = document.getElementById('soNumber').value;
-            const customer = document.getElementById('soCustomerName').value || 'Unknown Customer';
-            const dateTime = document.getElementById('soDateTime').value;
-            
-            populatePrintLayoutSO();
-            const soSnapshot = document.getElementById('printLayoutSO').innerHTML;
-            salesOrdersDB.push(soSnapshot);
-            const soIndex = salesOrdersDB.length - 1;
+            let custName = document.getElementById('so_custName').value;
+            let pName = document.getElementById('so_paperName').value;
+            if(!custName || !pName) return alert("Fill all details");
 
-            const soHistoryBody = document.getElementById('soHistoryBody');
-            const newRow = document.createElement('tr');
-            
-            newRow.innerHTML = `
-                <td>${dateTime}</td>
-                <td>${customer}</td>
-                <td><span style="color:red; font-weight:bold;">${soNo}</span></td>
-                <td><button class="action-btn" onclick="viewAttachment('SO', ${soIndex})">View Attached</button></td>
-                <td><button class="action-btn btn-primary" onclick="approveToProduction(this, '${soNo}')">Approved (Production Order Created)</button></td>
-            `;
-            soHistoryBody.appendChild(newRow);
-
-            logAction(`Sales Order Saved: ${soNo} for ${customer}`);
-            alert(`Sales Order ${soNo} Saved Successfully to History & Printed!`);
-
-            document.getElementById('printLayoutSO').style.display = 'block';
-            window.print();
-            document.getElementById('printLayoutSO').style.display = 'none';
-            
-            soCounter++;
-            
-            // Reset Fields
-            document.getElementById('soCustomerId').value = '';
-            document.getElementById('soCustomerName').value = '';
-            document.getElementById('soCustomerAddress').value = '';
-            document.getElementById('soProductName').value = '';
-            generateSODetails();
+            let data = {
+                so_no: "SO" + Math.floor(Math.random()*10000),
+                customer: custName,
+                date: new Date().toLocaleString(),
+                html_data: JSON.stringify({ type: document.getElementById('so_paperType').value, name: pName })
+            };
+            fetch('/api/sales_orders', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) })
+            .then(() => { alert("Sales Order Saved!"); loadTables(); });
         }
 
-        function printSalesOrder() {
-            populatePrintLayoutSO();
-            document.getElementById('printLayoutSO').style.display = 'block';
-            window.print();
-            document.getElementById('printLayoutSO').style.display = 'none';
-            logAction(`Sales Order Printed.`);
+        function loadTables() {
+            fetch('/api/quotations').then(res=>res.json()).then(data => {
+                let h_tb = document.querySelector('#q_history_table tbody'); 
+                h_tb.innerHTML = '';
+                data.forEach(d => {
+                    let row = `<tr><td>${d.date}</td><td>${d.customer}</td><td>${d.q_no}</td>
+                    <td><button class="action-btn secondary" onclick='printSpecificDocument("Q", ${JSON.stringify(d)})'>Download/Print</button></td>
+                    <td><button class="action-btn">Approved</button></td></tr>`;
+                    h_tb.innerHTML += row;
+                });
+            });
+
+            fetch('/api/sales_orders').then(res=>res.json()).then(data => {
+                let h_tb = document.querySelector('#so_history_table tbody'); 
+                h_tb.innerHTML = '';
+                data.forEach(d => {
+                    let row = `<tr><td>${d.date}</td><td>${d.customer}</td><td>${d.so_no}</td>
+                    <td><button class="action-btn secondary" onclick='printSpecificDocument("SO", ${JSON.stringify(d)})'>Download/Print</button></td>
+                    <td><button class="action-btn">Approved</button></td></tr>`;
+                    h_tb.innerHTML += row;
+                });
+            });
         }
 
-        function approveToProduction(btn, soNo) {
-            alert(`Production Order Successfully Created for Sales Order ${soNo}!`);
-            btn.innerText = "Production Order Active";
-            btn.disabled = true;
-            btn.style.backgroundColor = '#5bc0de';
-            logAction(`Production Order initiated for SO: ${soNo}.`);
-        }
-
-        // --- SHARED MODALS ---
-        function viewAttachment(type, index) {
-            const modal = document.getElementById('viewModal');
-            const modalArea = document.getElementById('modalPrintArea');
-            
+        // --- Print Overlap Fix (Perfect Isolation) ---
+        function printSpecificDocument(type, dataObj) {
             if(type === 'Q') {
-                modalArea.innerHTML = quotationsDB[index];
+                document.getElementById('pq_no').innerText = dataObj.q_no;
+                document.getElementById('pq_custName').innerText = dataObj.customer;
+                document.getElementById('pq_date').innerText = dataObj.date;
+                let parsed = JSON.parse(dataObj.data);
+                document.getElementById('pq_sub').innerText = parsed.sub;
+                document.getElementById('pq_vat').innerText = parsed.vat;
+                document.getElementById('pq_grand').innerText = parsed.grand;
+                
+                triggerPrintProcess('printFormatQ');
             } else if (type === 'SO') {
-                modalArea.innerHTML = salesOrdersDB[index];
+                document.getElementById('pso_no').innerText = dataObj.so_no;
+                document.getElementById('pso_custName').innerText = dataObj.customer;
+                document.getElementById('pso_date').innerText = dataObj.date;
+                let parsed = JSON.parse(dataObj.data);
+                document.getElementById('pso_paperType').innerText = parsed.type;
+                document.getElementById('pso_paperName').innerText = parsed.name;
+
+                triggerPrintProcess('printFormatSO');
             }
-            
-            modalArea.classList.add('print-document');
-            modalArea.style.display = 'block';
-            modalArea.style.position = 'relative';
-            modal.style.display = "block";
         }
 
-        function closeModal() { document.getElementById('viewModal').style.display = "none"; }
+        function triggerPrintProcess(elementId) {
+            // අදාළ Format එකට පමණක් 'printing' class එක යොදයි. Overlap වීම මුළුමනින්ම නවතී.
+            const target = document.getElementById(elementId);
+            target.classList.add('printing');
+            window.print();
+            target.classList.remove('printing');
+        }
 
-        function approveAction(btn, creationTime, docType) {
-            const currentTime = new Date().getTime();
-            const daysDifference = (currentTime - creationTime) / (1000 * 3600 * 24);
-
-            if (daysDifference > 14) {
-                alert("This document is older than 14 days and cannot be approved.");
-                btn.disabled = true;
-                btn.style.backgroundColor = 'gray';
-            } else {
-                alert(`Approved! Sending data to next section...`);
-                btn.innerText = "Processed";
-                btn.disabled = true;
-                btn.style.backgroundColor = '#5bc0de';
-                logAction(`${docType} Approved.`);
-            }
+        function saveCurrentTab() {
+            if(currentTab === 'Quotations') saveQuotation();
+            else if(currentTab === 'Sales') saveSalesOrder();
         }
     </script>
 </body>
