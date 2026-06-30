@@ -110,6 +110,22 @@ def upload_customers():
     conn.commit()
     conn.close()
     return jsonify({"status": "success"})
+# Manual data add karanna / edit karanna aluth route ekak
+@app.route('/api/add_customer', methods=['POST'])
+def add_customer():
+    data = request.json
+    conn = get_db_connection()
+    c = conn.cursor()
+    # ID eka thiyanawa nam update karanna, nathnam aluthin add karanna (Upsert)
+    c.execute("""
+        INSERT INTO master_customers (customer_id, customer_name, customer_address)
+        VALUES (%s, %s, %s)
+        ON CONFLICT (customer_id) 
+        DO UPDATE SET customer_name = EXCLUDED.customer_name, customer_address = EXCLUDED.customer_address
+    """, (data['id'], data['name'], data['address']))
+    conn.commit()
+    conn.close()
+    return jsonify({"status": "success"})
 
 @app.route('/api/upload_papers', methods=['POST'])
 def upload_papers():
