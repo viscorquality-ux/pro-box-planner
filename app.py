@@ -12,7 +12,7 @@ DB_CONFIG = {
     'user': 'avnadmin',
     'password': 'YOUR_PASSWORD', # Need user to input this securely
     'host': 'probox123-viscorquality-0270.l.aivencloud.com',
-    'port': '20635'
+    'port': '28643'
 }
 
 def get_db_connection():
