@@ -13,7 +13,7 @@ DB_CONFIG = {
     'password': 'AVNS_AJNctiNyP1ujHPV3mh8', # Need user to input this securely
     'host': 'probox123-viscorquality-0270.l.aivencloud.com',
     'port': '28643'
-    'sslmode='require'  
+    'sslmode'='require'  
 }
 
 def get_db_connection():
