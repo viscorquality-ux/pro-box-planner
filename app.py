@@ -46,7 +46,11 @@ init_db()
 @app.route('/')
 def dashboard():
     return render_template('dashboard.html')
-
+    
+@app.route('/programme-plan')
+def programme_plan():
+    return render_template('programme_plan.html')
+    
 # API for Quotations
 @app.route('/api/quotations', methods=['GET', 'POST'])
 def manage_quotations():
