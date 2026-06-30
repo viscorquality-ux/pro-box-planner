@@ -8,12 +8,13 @@ app = Flask(__name__)
 
 # Aiven PostgreSQL Configuration
 DB_CONFIG = {
-    'dbname': 'defaultdb',
-    'user': 'avnadmin',
-    'password': 'AVNS_AJNctiNyP1ujHPV3mh8', # Need user to input this securely
-    'host': 'probox123-viscorquality-0270.l.aivencloud.com',
-    'port': '28643'
-    'sslmode'='require'  
+        psycopg2.connect(
+        host=os.environ.get('DB_HOST'),
+        port=os.environ.get('DB_PORT'),
+        dbname=os.environ.get('DB_NAME'),
+        user=os.environ.get('DB_USER'),
+        password=os.environ.get('DB_PASSWORD'),
+        sslmode='require' 
 }
 
 def get_db_connection():
