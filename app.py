@@ -92,6 +92,40 @@ def manage_sales_orders():
         c.close()
         conn.close()
         return jsonify(rows)
+# --- අලුතින් එක් කළ යුතු API Routes ---
+
+@app.route('/api/upload_customers', methods=['POST'])
+def upload_customers():
+    data = request.json # ලැයිස්තුවක් ලෙස එන JSON දත්ත
+    conn = get_db_connection()
+    c = conn.cursor()
+    for row in data:
+        # Upsert: ID එක තිබේ නම් දත්ත යාවත්කාලීන කරන්න, නැත්නම් අලුතින් දාන්න
+        c.execute("""
+            INSERT INTO master_customers (customer_id, customer_name, customer_address)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (customer_id) 
+            DO UPDATE SET customer_name = EXCLUDED.customer_name, customer_address = EXCLUDED.customer_address
+        """, (row['id'], row['name'], row['address']))
+    conn.commit()
+    conn.close()
+    return jsonify({"status": "success"})
+
+@app.route('/api/upload_papers', methods=['POST'])
+def upload_papers():
+    data = request.json
+    conn = get_db_connection()
+    c = conn.cursor()
+    for row in data:
+        # Upsert: පවතින දත්ත මකා නොදැමීම
+        c.execute("""
+            INSERT INTO master_papers (paper_type, paper_name)
+            VALUES (%s, %s)
+            ON CONFLICT (paper_type, paper_name) DO NOTHING
+        """, (row['type'], row['name']))
+    conn.commit()
+    conn.close()
+    return jsonify({"status": "success"})
 
 if __name__ == '__main__':
     app.run(debug=True)
