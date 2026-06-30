@@ -8,14 +8,15 @@ app = Flask(__name__)
 
 # Aiven PostgreSQL Configuration
 DB_CONFIG = {
-        psycopg2.connect(
+     conn = psycopg2.connect(
         host=os.environ.get('DB_HOST'),
         port=os.environ.get('DB_PORT'),
         dbname=os.environ.get('DB_NAME'),
         user=os.environ.get('DB_USER'),
         password=os.environ.get('DB_PASSWORD'),
-        sslmode='require' 
-}
+        sslmode='require',
+        connect_timeout=10 # සම්බන්ධ වීමට ගතවන කාලය සීමා කිරීම (වැදගත්)
+    )
 
 def get_db_connection():
     conn = psycopg2.connect(**DB_CONFIG)
