@@ -10,9 +10,10 @@ app = Flask(__name__)
 DB_CONFIG = {
     'dbname': 'defaultdb',
     'user': 'avnadmin',
-    'password': 'YOUR_PASSWORD', # Need user to input this securely
+    'password': 'AVNS_AJNctiNyP1ujHPV3mh8', # Need user to input this securely
     'host': 'probox123-viscorquality-0270.l.aivencloud.com',
     'port': '28643'
+    'sslmode='require'  
 }
 
 def get_db_connection():
